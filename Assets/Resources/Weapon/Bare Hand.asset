@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f496188c763deb8478cf9eb326113c39, type: 3}
+  m_Name: Bare Hand
+  m_EditorClassIdentifier: 
+  WeaponName: Bare Hand
+  Model: {fileID: 8183066955010809955, guid: 026153577bdfbd54c8b6646f2d9a8cce, type: 3}
+  HitBoxsPrefab: {fileID: 303590331752591291, guid: b6fbf9fa8ae5f294ea9c6657c5f19c73,
+    type: 3}
+  AnimatorOverride: {fileID: 22100000, guid: 62644998b3b7d5141b5d1b706e5ab373, type: 2}
+  HitNumber: 3
+  DamageMultiplier: 0.8
+  Handing: 1

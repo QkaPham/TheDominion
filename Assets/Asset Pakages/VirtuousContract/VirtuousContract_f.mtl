@@ -1,0 +1,120 @@
+# File produced by Open Asset Import Library (http://www.assimp.sf.net)
+# (assimp v3.1.206520482)
+
+newmtl Bands
+kd 0.8 0.8 0.8
+ka 1 1 1
+ks 0.539683 0.539683 0.539683
+ke 0 0 0
+d 1
+Ns 157.47
+illum 2
+
+newmtl Blade
+kd 0.8 0.8 0.8
+ka 1 1 1
+ks 0.5 0.5 0.5
+ke 0 0 0
+d 1
+Ns 1000
+illum 2
+
+newmtl BladeOrnament
+kd 0.8 0.8 0.8
+ka 1 1 1
+ks 0.5 0.5 0.5
+ke 0 0 0
+d 1
+Ns 1000
+illum 2
+
+newmtl Fore_Gear
+kd 0.073235 0.073235 0.073235
+ka 1 1 1
+ks 0.5 0.5 0.5
+ke 0 0 0
+d 1
+Ns 1000
+illum 2
+
+newmtl Gear
+kd 1 1 1
+ka 1 1 1
+ks 0.5 0.5 0.5
+ke 0 0 0
+d 1
+Ns 1000
+illum 2
+
+newmtl GearOrnament
+kd 0.8 0.8 0.8
+ka 1 1 1
+ks 0.5 0.5 0.5
+ke 0 0 0
+d 1
+Ns 1000
+illum 2
+
+newmtl Grip
+kd 0.8 0.8 0.8
+ka 1 1 1
+ks 0.5 0.5 0.5
+ke 0 0 0
+d 1
+Ns 1000
+illum 2
+
+newmtl Halo
+kd 0.795869 0.8 0.146719
+ka 1 1 1
+ks 0 0 0
+ke 0 0 0
+d 1
+Ns 1000
+illum 2
+
+newmtl Handle
+kd 0 0 0
+ka 1 1 1
+ks 0.5 0.5 0.5
+ke 0 0 0
+d 1
+Ns 1000
+illum 2
+
+newmtl HandleOrnament
+kd 0.8 0.8 0.8
+ka 1 1 1
+ks 0.5 0.5 0.5
+ke 0 0 0
+d 1
+Ns 1000
+illum 2
+
+newmtl HandleRing
+kd 0.438544 0.438544 0.438544
+ka 1 1 1
+ks 0.622047 0.622047 0.622047
+ke 0 0 0
+d 1
+Ns 632.463
+illum 2
+
+newmtl Pearl
+kd 0.8 0.8 0.8
+ka 1 1 1
+ks 0.5 0.5 0.5
+ke 0 0 0
+d 1
+Ns 1000
+illum 2
+
+newmtl Rings
+kd 0.8 0.8 0.8
+ka 1 1 1
+ks 0.5 0.5 0.5
+ke 0 0 0
+d 1
+Ns 1000
+illum 2
+
