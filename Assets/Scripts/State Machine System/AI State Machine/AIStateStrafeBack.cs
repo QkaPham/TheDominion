@@ -4,18 +4,22 @@ using UnityEngine;
 namespace Project3D
 {
     [Serializable]
-    public class AIStateStepBack : AIState
+    public class AIStateStrafeBack : AIState
     {
-        [field: SerializeField] protected override string StateName { get; set; } = "StepBack";
+        [field: SerializeField] protected override string StateName { get; set; } = "StrafeBack";
         [field: SerializeField] protected override float TransitionDuration { get; set; } = 0.1f;
 
-        public float minDistance = 3;
+        [SerializeField] protected float desireDistance = 3;
+        [SerializeField] protected float moveSpeed = 1.5f;
+
+        public bool ReachDesireDistance => targetDetector.DistanceToTarget >= desireDistance;
 
         public override void Enter()
         {
             base.Enter();
 
             agent.updateRotation = false;
+            agent.speed = moveSpeed;
         }
 
         public override void Exit()

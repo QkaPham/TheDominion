@@ -21,39 +21,40 @@ namespace Project3D
             targets = new Collider[maxDetectNumber];
         }
 
-        public bool HasTargetForward()
-        {
-            if (Target != null) return true;
-            Target = GetTargetForward();
-            return Target != null;
-        }
-
-        public bool HasTargetInRadius()
-        {
-            if (Target != null) return true;
-            Target = GetTargetInRadius();
-            return Target != null;
-        }
+        public bool HasTarget() => Target != null;
 
         public void GiveUp() => Target = null;
 
-        private Transform GetTargetForward()
+        public void GetTargetForward()
         {
             System.Array.Clear(targets, 0, maxDetectNumber);
-            if (Physics.OverlapSphereNonAlloc(transform.position, distance, targets, targetLayer) <= 0) return null;
+            if (Physics.OverlapSphereNonAlloc(transform.position, distance, targets, targetLayer) <= 0)
+            {
+                Target = null;
+                return;
+            }
 
             var direction = targets[0].transform.position - transform.position;
-            if (Vector3.Angle(transform.forward, direction) > angle / 2f) return null;
+            if (Vector3.Angle(transform.forward, direction) > angle / 2f)
+            {
+                Target = null;
+                return;
+            }
 
-            return targets[0].transform;
+            Target = targets[0].transform;
         }
 
-        private Transform GetTargetInRadius()
+        public void GetTargetInRadius()
         {
             System.Array.Clear(targets, 0, maxDetectNumber);
-            if (Physics.OverlapSphereNonAlloc(transform.position, radius, targets, targetLayer) <= 0) return null;
+            if (Physics.OverlapSphereNonAlloc(transform.position, radius, targets, targetLayer) <= 0)
+            {
+                Target = null;
+                return;
+            }
 
-            return targets[0].transform;
+            Target = targets[0].transform;
         }
     }
 }
+

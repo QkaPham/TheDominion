@@ -22,5 +22,12 @@ namespace Project3D
 
             agent.enabled = true;
         }
+
+        public override void PhysicUpdate()
+        {
+            base.PhysicUpdate();
+
+            targetDetector.GetTargetForward();
+        }
     }
 }

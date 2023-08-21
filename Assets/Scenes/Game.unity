@@ -1853,7 +1853,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 330585543}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.003856305, y: -2.7844058e-10, z: -1.0737596e-12, w: 0.9999926}
+  m_LocalRotation: {x: -0.003856305, y: -0.00000000104761, z: -4.039933e-12, w: 0.9999926}
   m_LocalPosition: {x: 0, y: 2.19, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -5394,7 +5394,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1102888297}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.02497659, y: 0.000000017201012, z: -4.2975679e-10, w: 0.999688}
+  m_LocalRotation: {x: 0.024976611, y: -0.000000017201012, z: 4.2975712e-10, w: 0.999688}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -7649,7 +7649,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1561561703}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.032495547, y: 1e-45, z: -0, w: 0.9994719}
+  m_LocalRotation: {x: -0.032495543, y: 1e-45, z: -0, w: 0.9994719}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -7969,7 +7969,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1632683942}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.0038563022, y: -1.5270835e-10, z: -5.888939e-13, w: 0.9999926}
+  m_LocalRotation: {x: -0.0038563008, y: -0.0000000010214095, z: -3.9388913e-12, w: 0.9999926}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -13908,13 +13908,28 @@ PrefabInstance:
     - target: {fileID: 2479573162885149606, guid: 3b67c45626a9d5e4595da1a72f02d6bc,
         type: 3}
       propertyPath: activeRadius
-      value: 3
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 2479573162885149606, guid: 3b67c45626a9d5e4595da1a72f02d6bc,
         type: 3}
       propertyPath: targetDetector
       value: 
       objectReference: {fileID: 1470069510}
+    - target: {fileID: 2479573162885149606, guid: 3b67c45626a9d5e4595da1a72f02d6bc,
+        type: 3}
+      propertyPath: strafe.moveSpeed
+      value: 0.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 2479573162885149606, guid: 3b67c45626a9d5e4595da1a72f02d6bc,
+        type: 3}
+      propertyPath: strafeBack.moveSpeed
+      value: 0.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 2479573162885149606, guid: 3b67c45626a9d5e4595da1a72f02d6bc,
+        type: 3}
+      propertyPath: findAttacker.delayAttackTime
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 3241881314978388023, guid: 3b67c45626a9d5e4595da1a72f02d6bc,
         type: 3}
       propertyPath: mainCam

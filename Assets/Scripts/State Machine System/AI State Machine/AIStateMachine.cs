@@ -1,6 +1,3 @@
-using System;
-using System.Collections.Generic;
-using Unity.Burst;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -19,8 +16,8 @@ namespace Project3D
         [SerializeField] protected AIStateIdle idle;
         [SerializeField] protected AIStateAttack attack;
         [SerializeField] protected AIStateChase chase;
-        [SerializeField] protected AIStateAwaitCooldown awaitCooldown;
-        [SerializeField] protected AIStateStepBack stepBack;
+        [SerializeField] protected AIStateStrafe strafe;
+        [SerializeField] protected AIStateStrafeBack strafeBack;
         [SerializeField] protected AIStateFindAttacker findAttacker;
         [SerializeField] protected AIStateDefeat defeat;
         [SerializeField] protected AIStateGiveUp giveUp;
@@ -39,28 +36,28 @@ namespace Project3D
             idle.Initialize(animator, ai, agent, targetDetector, this);
             attack.Initialize(animator, ai, agent, targetDetector, this);
             chase.Initialize(animator, ai, agent, targetDetector, this);
-            awaitCooldown.Initialize(animator, ai, agent, targetDetector, this);
-            stepBack.Initialize(animator, ai, agent, targetDetector, this);
+            strafe.Initialize(animator, ai, agent, targetDetector, this);
+            strafeBack.Initialize(animator, ai, agent, targetDetector, this);
             findAttacker.Initialize(animator, ai, agent, targetDetector, this);
             defeat.Initialize(animator, ai, agent, targetDetector, this);
             giveUp.Initialize(animator, ai, agent, targetDetector, this);
 
-            AddTransition(idle, chase, () => targetDetector.HasTargetForward() && ai.CanAttack);
-            AddTransition(idle, awaitCooldown, () => targetDetector.HasTargetForward() && !ai.CanAttack);
+            AddTransition(idle, chase, () => targetDetector.HasTarget() && ai.CanAttack);
+            AddTransition(idle, strafe, () => targetDetector.HasTarget() && !ai.CanAttack);
 
-            AddTransition(attack, stepBack, () => attack.IsAnimationFinished && targetDetector.HasTargetInRadius());
-            AddTransition(attack, idle, () => attack.IsAnimationFinished && !targetDetector.HasTargetInRadius());
+            AddTransition(attack, strafeBack, () => attack.IsAnimationFinished && targetDetector.HasTarget());
+            AddTransition(attack, idle, () => attack.IsAnimationFinished && !targetDetector.HasTarget());
 
             AddTransition(chase, attack, chase.ReachAttackRange);
-            AddTransition(chase, idle, () => !targetDetector.HasTargetInRadius());
+            AddTransition(chase, idle, () => !targetDetector.HasTarget());
 
-            AddTransition(awaitCooldown, idle, () => !targetDetector.HasTargetInRadius());
-            AddTransition(awaitCooldown, chase, () => ai.CanAttack);
+            AddTransition(strafe, idle, () => !targetDetector.HasTarget());
+            AddTransition(strafe, chase, () => ai.CanAttack);
 
-            AddTransition(stepBack, attack, () => targetDetector.DistanceToTarget > stepBack.minDistance && ai.CanAttack);
-            AddTransition(stepBack, awaitCooldown, () => targetDetector.DistanceToTarget > stepBack.minDistance && !ai.CanAttack);
+            AddTransition(strafeBack, attack, () => strafeBack.ReachDesireDistance && ai.CanAttack);
+            AddTransition(strafeBack, strafe, () => strafeBack.ReachDesireDistance && !ai.CanAttack);
 
-            AddTransition(findAttacker, chase, () => findAttacker.StiffTimeOut && targetDetector.HasTargetInRadius());
+            AddTransition(findAttacker, chase, () => findAttacker.StiffTimeOut && targetDetector.HasTarget());
             AddTransition(findAttacker, idle, () => findAttacker.TimeOut);
 
             AddTransition(giveUp, idle, () => Vector3.Distance(transform.position, startPoint.position) < 0.1f);
@@ -85,7 +82,7 @@ namespace Project3D
 
         private void TransitionOntakeDamage(float diff)
         {
-            if (!targetDetector.HasTargetInRadius() && diff < 0)
+            if (!targetDetector.HasTarget() && diff < 0)
             {
                 SwitchState(findAttacker);
             }

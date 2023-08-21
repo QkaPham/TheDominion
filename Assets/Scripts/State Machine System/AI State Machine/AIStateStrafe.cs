@@ -4,20 +4,22 @@ using UnityEngine;
 namespace Project3D
 {
     [Serializable]
-    public class AIStateAwaitCooldown : AIState
+    public class AIStateStrafe : AIState
     {
-        [field: SerializeField] protected override string StateName { get; set; } = "AwaitCooldown";
+        [field: SerializeField] protected override string StateName { get; set; } = "Strafe";
         [field: SerializeField] protected override float TransitionDuration { get; set; } = 0.1f;
 
-        private bool isMoveLeft;
+        [SerializeField] protected float moveSpeed = 1.5f;
+
+        protected int randomSign = 1;
 
         public override void Enter()
         {
             base.Enter();
 
-            isMoveLeft = UnityEngine.Random.Range(0, 2) == 0;
+            randomSign = UnityEngine.Random.value < .5 ? 1 : -1;
             agent.updateRotation = false;
-            animator.SetFloat("StateName", isMoveLeft ? 0 : 1);
+            animator.SetFloat(StateHash, randomSign);
         }
 
         public override void Exit()
@@ -25,6 +27,7 @@ namespace Project3D
             base.Exit();
 
             agent.updateRotation = true;
+            agent.speed = moveSpeed;
         }
 
         public override void LogicUpdate()
@@ -32,13 +35,13 @@ namespace Project3D
             base.LogicUpdate();
 
             stateMachine.transform.LookAt(targetDetector.Target);
-            MoveAroundTarget(isMoveLeft);
+            MoveAroundTarget();
         }
 
-        public void MoveAroundTarget(bool isMoveLeft)
+        protected void MoveAroundTarget()
         {
             var leftDirection = Vector3.Cross(targetDetector.TargetDirection, Vector3.up);
-            agent.SetDestination(targetDetector.transform.position + (isMoveLeft ? leftDirection : -leftDirection));
+            agent.SetDestination(targetDetector.transform.position + (randomSign * leftDirection));
         }
     }
 }

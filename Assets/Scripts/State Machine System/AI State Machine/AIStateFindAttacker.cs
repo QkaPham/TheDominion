@@ -11,8 +11,23 @@ namespace Project3D
 
         [SerializeField] protected float findTime = 10f;
         [SerializeField] protected float stiffTime = 1f;
+        [SerializeField] protected float delayAttackTime = 1f;
 
         public bool TimeOut => StateDuration >= findTime;
         public bool StiffTimeOut => StateDuration >= stiffTime;
+
+        public override void Enter()
+        {
+            base.Enter();
+            Debug.Log("enter ");
+            ai.StopAttackFor(delayAttackTime);
+        }
+
+        public override void PhysicUpdate()
+        {
+            base.PhysicUpdate();
+
+            targetDetector.GetTargetInRadius();
+        }
     }
 }
