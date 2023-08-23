@@ -14,6 +14,7 @@ namespace Project3D
             base.Enter();
 
             agent.enabled = false;
+            stateMachine.health.HealFull();
         }
 
         public override void Exit()
@@ -22,6 +23,7 @@ namespace Project3D
 
             agent.enabled = true;
         }
+
 
         public override void PhysicUpdate()
         {

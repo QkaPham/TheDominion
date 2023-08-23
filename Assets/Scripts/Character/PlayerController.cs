@@ -14,8 +14,8 @@ namespace Project3D
         [SerializeField] public float slideLimit = 60;
         [SerializeField] float snapDistance = 0.15f;
 
-        [HideInInspector] public Vector3 velocity;
-        [HideInInspector] public Vector3 acceleration;
+        [SerializeField] public Vector3 velocity;
+        [SerializeField] public Vector3 acceleration;
 
         private Quaternion targetRotation = Quaternion.identity;
         private float rotationSpeed = 1200f; // turn 180 deg in 0.15s
@@ -25,7 +25,7 @@ namespace Project3D
         public bool IsFalling => velocity.y < 0 && !IsGrounded;
 
         public event System.Action DeathEvent;
-        private bool useRootMotion = false;
+        [SerializeField] private bool useRootMotion = false;
 
         public override void LoadComponent()
         {
@@ -64,7 +64,7 @@ namespace Project3D
         public void SetTargetRotation(Vector3 direction)
         {
             if (direction.x == 0 && direction.z == 0) return;
-            targetRotation = Quaternion.Euler(0f, Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg, 0f);
+            targetRotation = Quaternion.LookRotation(direction);
         }
 
         private void Rotate() => transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);

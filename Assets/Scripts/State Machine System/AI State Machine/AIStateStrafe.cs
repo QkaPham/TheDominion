@@ -7,7 +7,7 @@ namespace Project3D
     public class AIStateStrafe : AIState
     {
         [field: SerializeField] protected override string StateName { get; set; } = "Strafe";
-        [field: SerializeField] protected override float TransitionDuration { get; set; } = 0.1f;
+        [field: SerializeField, Range(0f, 1f)] protected override float TransitionDuration { get; set; } = 0.1f;
 
         [SerializeField] protected float moveSpeed = 1.5f;
 

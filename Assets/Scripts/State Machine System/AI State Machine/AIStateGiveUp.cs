@@ -7,7 +7,7 @@ namespace Project3D
     public class AIStateGiveUp : AIState
     {
         [field: SerializeField] protected override string StateName { get; set; } = "GiveUp";
-        [field: SerializeField] protected override float TransitionDuration { get; set; } = 0f;
+        [field: SerializeField, Range(0f, 1f)] protected override float TransitionDuration { get; set; } = 0f;
 
         [SerializeField] protected float moveSpeed = 4f;
 

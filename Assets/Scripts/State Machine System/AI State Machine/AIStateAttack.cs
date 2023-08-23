@@ -7,7 +7,7 @@ namespace Project3D
     public class AIStateAttack : AIState
     {
         [field: SerializeField] protected override string StateName { get; set; } = "Attack";
-        [field: SerializeField] protected override float TransitionDuration { get; set; } = 0f;
+        [field: SerializeField, Range(0f, 1f)] protected override float TransitionDuration { get; set; } = 0f;
 
         [SerializeField] private float attackCoolDown = 5f;
 
@@ -19,7 +19,7 @@ namespace Project3D
             base.Enter();
 
             agent.enabled = false;
-            stateMachine.transform.LookAt(targetDetector.transform);
+            stateMachine.transform.LookAt(targetDetector.Target.transform);
             ai.StopAttackFor(attackCoolDown);
         }
 

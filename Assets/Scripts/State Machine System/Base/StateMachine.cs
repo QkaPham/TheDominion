@@ -1,21 +1,16 @@
 using System;
 using System.Collections.Generic;
-using UnityEngine;
 
 namespace Project3D
 {
-    public enum TransitionEventId
-    {
-        LoseHealth,
-        Defeat
-    }
-
     public class StateMachine : MyMonoBehaviour
     {
         protected IState currentState;
 
         protected Dictionary<IState, List<Transition>> transitions = new();
+        private List<Transition> currentTransitions = new();
         private List<Transition> transitionsFromAny = new();
+        private static List<Transition> EmptyTransisions = new();
 
         void FixedUpdate()
         {
@@ -31,6 +26,11 @@ namespace Project3D
         protected void SwitchOn(IState newState)
         {
             currentState = newState;
+            transitions.TryGetValue(currentState, out currentTransitions);
+
+            if (currentTransitions == null)       
+                currentTransitions = EmptyTransisions;
+            
             currentState.Enter();
         }
 
@@ -65,7 +65,7 @@ namespace Project3D
                 }
             }
 
-            foreach (var transition in transitions.GetValueOrDefault(currentState))
+            foreach (var transition in currentTransitions)
             {
                 if (transition.Condition())
                 {

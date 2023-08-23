@@ -15,5 +15,16 @@ namespace Project3D
             yield return new WaitForSeconds(seconds);
             CanAttack = true;
         }
+
+        public class Skill
+        {
+            public string name;
+            public float cooldown;
+            
+            public void Use()
+            {
+                //switch state
+            }
+        }
     }
 }

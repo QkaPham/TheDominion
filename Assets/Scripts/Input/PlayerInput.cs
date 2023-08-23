@@ -85,14 +85,14 @@ namespace Project3D
         {
             camreraRotation = Camera.main.transform.rotation.eulerAngles.y;
 
-            if (Keyboard.current.leftAltKey.wasPressedThisFrame)
-            {
-                EnableUIInput(true);
-            }
-            if (Keyboard.current.leftAltKey.wasReleasedThisFrame)
-            {
-                EnableUIInput(false);
-            }
+            //if (Keyboard.current.leftAltKey.wasPressedThisFrame)
+            //{
+            //    EnableUIInput(true);
+            //}
+            //if (Keyboard.current.leftAltKey.wasReleasedThisFrame)
+            //{
+            //    EnableUIInput(false);
+            //}
         }
 
         private void OnEnable()

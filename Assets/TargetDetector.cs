@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Animations.Rigging;
 
 namespace Project3D
 {
@@ -9,8 +10,12 @@ namespace Project3D
         [SerializeField] private float angle = 180;
         [SerializeField] private int maxDetectNumber = 1;
         [SerializeField] private float radius = 3;
-        private Collider[] targets;
+        [SerializeField] private Transform lookAtPoint;
+        [SerializeField] private Rig lookAtRig;
+        [SerializeField] private float lookSmoothTime = 0.1f;
+        public bool Look { get; set; }
 
+        private Collider[] targets;
         [field: SerializeField] public Transform Target { get; private set; }
         public Vector3 TargetDirection => Target.position - transform.position;
         public float DistanceToTarget => Vector3.Distance(transform.position, Target.position);
@@ -19,6 +24,11 @@ namespace Project3D
         {
             maxDetectNumber = Mathf.Max(1, maxDetectNumber);
             targets = new Collider[maxDetectNumber];
+        }
+
+        private void Update()
+        {
+            LookAtTarget();
         }
 
         public bool HasTarget() => Target != null;
@@ -54,6 +64,19 @@ namespace Project3D
             }
 
             Target = targets[0].transform;
+        }
+
+        private void LookAtTarget()
+        {
+            if (HasTarget() && Look)
+            {
+                lookAtRig.weight = Mathf.MoveTowards(lookAtRig.weight, 1, lookSmoothTime);
+                lookAtPoint.transform.position = Target.position;
+            }
+            else
+            {
+                lookAtRig.weight = Mathf.MoveTowards(lookAtRig.weight, 0, lookSmoothTime);
+            }
         }
     }
 }

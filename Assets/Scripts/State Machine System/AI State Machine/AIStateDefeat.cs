@@ -7,12 +7,13 @@ namespace Project3D
     public class AIStateDefeat : AIState
     {
         [field: SerializeField] protected override string StateName { get; set; } = "Defeat";
-        [field: SerializeField] protected override float TransitionDuration { get; set; } = 0f;
+        [field: SerializeField, Range(0f, 1f)] protected override float TransitionDuration { get; set; } = 0f;
 
         public override void Enter()
         {
             base.Enter();
 
+            targetDetector.GiveUp();
             agent.enabled = false;
         }
     }
