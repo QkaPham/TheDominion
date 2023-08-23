@@ -13,7 +13,7 @@ namespace Project3D
         [SerializeField] private Transform lookAtPoint;
         [SerializeField] private Rig lookAtRig;
         [SerializeField] private float lookSmoothTime = 0.1f;
-        public bool Look { get; set; }
+        public bool Look { get; set; } = true;
 
         private Collider[] targets;
         [field: SerializeField] public Transform Target { get; private set; }
@@ -70,12 +70,14 @@ namespace Project3D
         {
             if (HasTarget() && Look)
             {
-                lookAtRig.weight = Mathf.MoveTowards(lookAtRig.weight, 1, lookSmoothTime);
-                lookAtPoint.transform.position = Target.position;
+                if (lookAtRig.weight < 1)
+                    lookAtRig.weight = Mathf.MoveTowards(lookAtRig.weight, 1, lookSmoothTime);
+                    lookAtPoint.transform.position = Target.position;
             }
             else
             {
-                lookAtRig.weight = Mathf.MoveTowards(lookAtRig.weight, 0, lookSmoothTime);
+                if (lookAtRig.weight > 0)
+                    lookAtRig.weight = Mathf.MoveTowards(lookAtRig.weight, 0, lookSmoothTime);
             }
         }
     }

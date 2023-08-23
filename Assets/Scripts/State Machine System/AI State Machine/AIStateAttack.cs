@@ -13,20 +13,20 @@ namespace Project3D
 
         [SerializeField] private float startChasingDistance = 2f;
 
+        protected override int StateHash => stateMachine.aiSkill.nextSkill.hash;
 
         public override void Enter()
         {
             base.Enter();
 
-            agent.enabled = false;
             stateMachine.transform.LookAt(targetDetector.Target.transform);
             ai.StopAttackFor(attackCoolDown);
+            stateMachine.UseSkill();
         }
 
         public override void Exit()
         {
             base.Exit();
-
             agent.enabled = true;
         }
     }

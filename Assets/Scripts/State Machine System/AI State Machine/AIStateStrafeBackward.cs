@@ -34,13 +34,15 @@ namespace Project3D
         {
             base.LogicUpdate();
 
-            RotateToTarget();
             agent.SetDestination(stateMachine.transform.position - targetDetector.TargetDirection);
         }
 
         private void RotateToTarget()
         {
-            stateMachine.transform.rotation = Quaternion.RotateTowards(stateMachine.transform.rotation, Quaternion.LookRotation(targetDetector.TargetDirection), rotationSpeed * Time.deltaTime);
+            var direction = targetDetector.TargetDirection;
+            direction.y = 0;
+            stateMachine.transform.rotation = Quaternion.RotateTowards(stateMachine.transform.rotation, Quaternion.LookRotation(direction, Vector3.up), rotationSpeed * Time.deltaTime);
+
         }
     }
 }

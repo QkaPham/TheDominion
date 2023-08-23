@@ -26,7 +26,7 @@ namespace Project3D
 
         public event System.Action DeathEvent;
         [SerializeField] private bool useRootMotion = false;
-
+        private float slideTimer;
         public override void LoadComponent()
         {
             controller = GetComponent<CharacterController>();
@@ -47,15 +47,16 @@ namespace Project3D
 
         public void Move(Vector3 velocity)
         {
-            SetTargetRotation(velocity);
             this.velocity = velocity;
+            SetTargetRotation(velocity);
         }
 
         public void MoveAndRotate(Vector3 velocity)
         {
-            SetTargetRotation(velocity);
             this.velocity.x = velocity.x;
             this.velocity.z = velocity.z;
+
+            SetTargetRotation(velocity);
             Rotate();
         }
 
@@ -64,6 +65,7 @@ namespace Project3D
         public void SetTargetRotation(Vector3 direction)
         {
             if (direction.x == 0 && direction.z == 0) return;
+            direction.y = 0;
             targetRotation = Quaternion.LookRotation(direction);
         }
 
@@ -105,16 +107,7 @@ namespace Project3D
             velocity.y = hasGroundBelow ? SnapSpeed : Mathf.Max(velocity.y, 0f);
         }
 
-        //public bool OnSteepSlope(out RaycastHit downwardHit)
-        //{
-        //    if (Physics.SphereCast(transform.position + controller.center, controller.radius, Vector3.down, out downwardHit, Mathf.Infinity, groundLayer))
-        //    {
-        //        return Vector3.Angle(Vector3.up, downwardHit.normal) > slideLimit;
-        //    }
-        //    return false;
-        //}
 
-        private float slideTimer;
         public bool OnSteepSlope(out RaycastHit downwardHit, float time = 0f)
         {
             if (Physics.SphereCast(transform.position + controller.center, controller.radius, Vector3.down, out downwardHit, Mathf.Infinity, groundLayer))
