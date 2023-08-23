@@ -7,6 +7,7 @@ namespace Project3D
 {
     public class AISkills : MyMonoBehaviour
     {
+        [SerializeField] private TargetDetector targetDetector;
         public List<Skill> skillList = new();
 
         public bool HasSkillAvailable => nextSkill.CanUse;
@@ -15,14 +16,22 @@ namespace Project3D
 
         public float SkillRange => nextSkill.skillRange;
 
-        public Skill bite;
-        public Skill pounch;
+        public SkillBite bite;
+        public SkillPounch pounch;
+
+
+        public override void LoadComponent()
+        {
+            base.LoadComponent();
+            
+            targetDetector = GetComponent<TargetDetector>();
+        }
 
         private void Awake()
         {
             skillList = new List<Skill> { bite, pounch };
-            bite.Init();
-            pounch.Init();
+            bite.Init(targetDetector);
+            pounch.Init(targetDetector);
             nextSkill = skillList[0];
         }
 
@@ -57,33 +66,42 @@ namespace Project3D
         {
             base.Activate(agent);
 
+            agent.stoppingDistance = 2f;
             agent.enabled = false;
-        }
-    }
-
-    public class SkillPounch : Skill
-    {
-        public override void Activate(NavMeshAgent agent)
-        {
-            base.Activate(agent);
-
-            agent.speed = 10;
+            Debug.Log(agent.enabled);
         }
     }
 
     [Serializable]
-    public class Skill
+    public class SkillPounch : Skill
+    {
+        public float minDistance = 2f;
+        public override bool CanUse => base.CanUse && targetDetector.DistanceToTarget < minDistance;
+
+        public override void Activate(NavMeshAgent agent)
+        {
+            base.Activate(agent);
+
+            agent.stoppingDistance = 2f;
+            agent.SetDestination(targetDetector.Target.position - targetDetector.TargetDirection.normalized * 2f);
+        }
+    }
+
+    [Serializable]
+    public  class Skill 
     {
         public string name;
         public int hash;
         public float cooldown;
         public float lastUseTime;
-        public bool CanUse => Time.time - lastUseTime >= cooldown;
+        public virtual bool CanUse => Time.time - lastUseTime >= cooldown;
         public float skillRange;
+        public TargetDetector targetDetector;
 
-        public void Init()
+        public void Init(TargetDetector targetDetector)
         {
             hash = Animator.StringToHash(name);
+            this.targetDetector = targetDetector;
         }
 
         public virtual void Activate(NavMeshAgent agent)

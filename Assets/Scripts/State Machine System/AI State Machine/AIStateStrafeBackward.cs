@@ -34,6 +34,7 @@ namespace Project3D
         {
             base.LogicUpdate();
 
+            RotateToTarget();
             agent.SetDestination(stateMachine.transform.position - targetDetector.TargetDirection);
         }
 

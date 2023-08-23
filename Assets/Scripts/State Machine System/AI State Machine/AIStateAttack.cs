@@ -19,14 +19,19 @@ namespace Project3D
         {
             base.Enter();
 
+            Debug.Log(stateMachine.aiSkill.nextSkill.name);
+
             stateMachine.transform.LookAt(targetDetector.Target.transform);
             ai.StopAttackFor(attackCoolDown);
             stateMachine.UseSkill();
+            
         }
 
         public override void Exit()
         {
             base.Exit();
+
+            agent.stoppingDistance = 0f;
             agent.enabled = true;
         }
     }
