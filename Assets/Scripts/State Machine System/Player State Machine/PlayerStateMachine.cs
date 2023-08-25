@@ -46,6 +46,7 @@ namespace Project3D
             dash.Initialize(animator, player, input, animationEvent, this);
             airJump.Initialize(animator, player, input, animationEvent, this);
             land.Initialize(animator, player, input, animationEvent, this);
+            defeat.Initialize(animator, player, input, animationEvent, this);
 
             AddTransition(idle, run, () => input.Move);
             AddTransition(idle, jump, () => input.Jump);

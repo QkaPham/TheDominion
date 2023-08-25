@@ -1,5 +1,6 @@
 ﻿using System;
 using UnityEngine;
+using UnityEngine.AI;
 
 namespace Project3D
 {
@@ -9,22 +10,36 @@ namespace Project3D
         [field: SerializeField] protected override string StateName { get; set; } = "Attack";
         [field: SerializeField, Range(0f, 1f)] protected override float TransitionDuration { get; set; } = 0f;
 
-        [SerializeField] private float attackCoolDown = 5f;
-
         [SerializeField] private float startChasingDistance = 2f;
-
-        protected override int StateHash => stateMachine.aiSkill.nextSkill.hash;
+        public override bool HasTransitionRequest() => animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.99f && animator.GetCurrentAnimatorStateInfo(0).IsName(stateMachine.SkillName);
+        protected override int StateHash => stateMachine.SkillHash;
 
         public override void Enter()
         {
             base.Enter();
 
-            Debug.Log(stateMachine.aiSkill.nextSkill.name);
-
-            stateMachine.transform.LookAt(targetDetector.Target.transform);
-            ai.StopAttackFor(attackCoolDown);
+            LookAtTarget();
             stateMachine.UseSkill();
-            
+        }
+
+        public override void LogicUpdate()
+        {
+            base.LogicUpdate();
+
+            if (agent.enabled)
+            {
+                if (!agent.pathPending)
+                {
+                    if (agent.remainingDistance <= agent.stoppingDistance)
+                    {
+                        if (!agent.hasPath || agent.velocity.sqrMagnitude == 0f)
+                        {
+                            agent.enabled = false;
+                            agent.velocity = Vector3.zero;
+                        }
+                    }
+                }
+            }
         }
 
         public override void Exit()
@@ -33,6 +48,13 @@ namespace Project3D
 
             agent.stoppingDistance = 0f;
             agent.enabled = true;
+        }
+
+        private void LookAtTarget()
+        {
+            var direction = targetDetector.TargetDirection;
+            direction.y = 0;
+            stateMachine.transform.rotation = Quaternion.LookRotation(direction);
         }
     }
 }

@@ -6,9 +6,14 @@ namespace Project3D
     {
         [SerializeField] private Camera mainCam;
 
+
         public override void LoadComponent()
         {
             base.LoadComponent();
+        }
+
+        private void Awake()
+        {
             mainCam = Camera.main;
         }
 

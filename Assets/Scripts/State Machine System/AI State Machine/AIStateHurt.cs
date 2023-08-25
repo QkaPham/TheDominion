@@ -11,6 +11,8 @@ namespace Project3D
 
         [SerializeField] protected float DelayAttackTime = 1.5f;
 
+        public override bool HasTransitionRequest() => animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.99f && animator.GetCurrentAnimatorStateInfo(0).IsName(StateName);
+
         public override void Enter()
         {
             base.Enter();

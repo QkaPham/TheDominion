@@ -13,7 +13,7 @@ namespace Project3D
         {
             base.Enter();
 
-            targetDetector.GiveUp();
+            targetDetector.Look = false;
             agent.enabled = false;
         }
     }

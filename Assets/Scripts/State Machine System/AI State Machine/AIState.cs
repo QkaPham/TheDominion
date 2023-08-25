@@ -17,7 +17,6 @@ namespace Project3D
         protected NavMeshAgent agent;
         protected TargetDetector targetDetector;
 
-        public bool IsAnimationFinished => animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.99f;
         protected float enterTime;
         protected float StateDuration => Time.time - enterTime;
 
@@ -30,6 +29,8 @@ namespace Project3D
             this.targetDetector = targetDetector;
             StateHash = Animator.StringToHash(StateName);
         }
+
+        public virtual bool HasTransitionRequest() => false;
 
         public virtual void Enter()
         {

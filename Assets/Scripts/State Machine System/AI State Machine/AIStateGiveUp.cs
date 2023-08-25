@@ -15,6 +15,7 @@ namespace Project3D
         {
             base.Enter();
 
+            agent.enabled = true;
             agent.speed = moveSpeed;
             targetDetector.GiveUp();
         }
@@ -23,7 +24,7 @@ namespace Project3D
         {
             base.LogicUpdate();
 
-            agent.SetDestination(stateMachine.startPoint.position);
+            agent.SetDestination(stateMachine.startPoint);
         }
     }
 }

@@ -14,12 +14,12 @@ namespace Project3D
             weaponPosition = FindObjectsOfType<WeaponPositionMark>();
         }
 
-        private void Start()
+        private void OnEnable()
         {
             weapon.EquipEvent += OnEquip;
         }
 
-        private void OnDestroy()
+        private void OnDisable()
         {
             weapon.EquipEvent -= OnEquip;
         }

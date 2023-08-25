@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace Project3D
@@ -21,8 +19,7 @@ namespace Project3D
         public void Initialize(GameObject weaponPrefab)
         {
             weapon = Instantiate(weaponPrefab, transform);
-            weapon.transform.localPosition = Vector3.zero;
-            weapon.transform.localRotation = Quaternion.identity;
+            weapon.transform.SetLocalPositionAndRotation(Vector3.zero, Quaternion.identity);
             Unload();
         }
 

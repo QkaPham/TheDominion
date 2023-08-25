@@ -62,6 +62,7 @@ namespace Project3D
                 if (transition.Condition())
                 {
                     SwitchState(transition.ToState);
+                    return;
                 }
             }
 
@@ -70,6 +71,7 @@ namespace Project3D
                 if (transition.Condition())
                 {
                     SwitchState(transition.ToState);
+                    return;
                 }
             }
         }

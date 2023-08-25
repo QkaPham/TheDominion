@@ -7,12 +7,19 @@ namespace Project3D
     {
         [SerializeField] protected Animator animator;
         [SerializeField] protected AIController ai;
-        [SerializeField] public AISkills aiSkill;
+        [SerializeField] protected AISkills aiSkill;
         [SerializeField] public Health health;
         [SerializeField] protected NavMeshAgent agent;
         [SerializeField] protected TargetDetector targetDetector;
-        [SerializeField] public Transform startPoint;
+        [SerializeField] public Vector3 startPoint;
         [SerializeField] protected float activeRadius = 10f;
+        public int SkillHash => aiSkill.NextSkill.Hash;
+        public string SkillName => aiSkill.NextSkill.Name;
+
+        protected virtual void Awake()
+        {
+            startPoint = transform.position;
+        }
 
         public override void LoadComponent()
         {
@@ -24,9 +31,8 @@ namespace Project3D
             targetDetector = GetComponent<TargetDetector>();
         }
 
-        public virtual void UseSkill()
-        {
-            aiSkill.Activate(agent);
-        }
+        protected AIState GetCurrentState() => (AIState)currentState;
+
+        public virtual void UseSkill() => aiSkill.Activate(agent);
     }
 }

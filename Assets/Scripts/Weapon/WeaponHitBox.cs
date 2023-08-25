@@ -12,7 +12,7 @@ namespace Project3D
         [SerializeField] private LayerMask damageableLayer;
 
         private Transform hitBoxParent;
-        private HitBox[] hitBoxs;
+        private HitBox[] hitBoxes;
 
         public override void LoadComponent()
         {
@@ -21,13 +21,13 @@ namespace Project3D
             animationEvent = GetComponentInChildren<PlayerAnimationEvent>();
         }
 
-        private void Start()
+        private void OnEnable()
         {
             animationEvent.AttackDealDamage += DealDamage;
             weapon.EquipEvent += CreateHitBoxs;
         }
 
-        private void OnDestroy()
+        private void OnDisable()
         {
             animationEvent.AttackDealDamage -= DealDamage;
             weapon.EquipEvent -= CreateHitBoxs;
@@ -40,18 +40,26 @@ namespace Project3D
             hitBoxParent = Instantiate(weaponSO.HitBoxsPrefab, transform);
             hitBoxParent.localPosition = Vector3.zero;
             hitBoxParent.localRotation = Quaternion.identity;
-            hitBoxs = hitBoxParent.GetComponentsInChildren<HitBox>();
+            hitBoxes = hitBoxParent.GetComponentsInChildren<HitBox>();
         }
 
         private void DealDamage(string attackName)
         {
-            var hitbox = GetHitBox(attackName);
-            if (hitbox != null) hitbox.DealDamage(strength.Value, damageableLayer);
+            foreach (HitBox hitBox in hitBoxes)
+            {
+                if (hitBox.AttackName == attackName)
+                {
+                    hitBox.DealDamage(strength.Value, damageableLayer);
+                    return;
+                }
+            }
+            //var hitbox = GetHitBox(attackName);
+            //if (hitbox != null) hitbox.DealDamage(strength.Value, damageableLayer);
         }
 
-        private HitBox GetHitBox(string attackName)
-        {
-            return hitBoxs.FirstOrDefault(hitBox => hitBox.AttackName == attackName);
-        }
+        //private HitBox GetHitBox(string attackName)
+        //{
+        //    return hitBoxes.FirstOrDefault(hitBox => hitBox.AttackName == attackName);
+        //}
     }
 }

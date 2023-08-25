@@ -20,7 +20,8 @@ namespace Project3D
 
         private void CreateDamagePopup(float damage)
         {
-            Instantiate(damagePopupPrefab, transform).Initialize(damage);
+            if (damage == 0) return;
+            Instantiate(damagePopupPrefab, transform).Initialize(Mathf.Abs(damage));
         }
     }
 }

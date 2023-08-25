@@ -8,6 +8,7 @@ namespace Project3D
     {
         [field: SerializeField] protected override string StateName { get; set; } = "Defeat";
         [field: SerializeField] protected override float TransitionDuration { get; set;  } = 0f;
+
         public override void LogicUpdate()
         {
             base.LogicUpdate();

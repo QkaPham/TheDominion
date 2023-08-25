@@ -1,0 +1,61 @@
+using UnityEngine;
+
+namespace Project3D
+{
+    public class WeaponPanel : MyMonoBehaviour
+    {
+        [SerializeField] private PlayerInput input;
+        [SerializeField] private CanvasGroup canvasGroup;
+       
+        public override void LoadComponent()
+        {
+            base.LoadComponent();
+            input = FindAnyObjectByType<PlayerInput>();
+            canvasGroup = GetComponent<CanvasGroup>();
+        }
+
+        private void Start()
+        {
+            Hide();
+        }
+
+        private void Update()
+        {
+            if (input.Pause)
+            {
+                Show();
+            }
+
+            if (input.Cancel)
+            {
+                Hide();
+            }
+        }
+
+        private void Show()
+        {
+            canvasGroup.alpha = 1;
+            canvasGroup.interactable = true;
+            canvasGroup.blocksRaycasts = true;
+            input.SwitchControls(ControlsID.UI);
+        }
+
+        private void Hide()
+        {
+            canvasGroup.alpha = 0;
+            canvasGroup.interactable = false;
+            canvasGroup.blocksRaycasts = false;
+            input.SwitchControls(ControlsID.Player);
+        }
+
+        private void UpdateWeapon(WeaponSO weapon)
+        {
+
+        }
+    }
+
+    public class BasePanel: MyMonoBehaviour
+    {
+
+    }
+}

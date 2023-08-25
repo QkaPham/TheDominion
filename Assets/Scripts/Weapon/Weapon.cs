@@ -18,7 +18,6 @@ namespace Project3D
         public void Equip(WeaponSO weapon)
         {
             EquipedWeapon = weapon;
-
             animator.runtimeAnimatorController = EquipedWeapon.AnimatorOverride;
             EquipEvent?.Invoke(weapon);
         }

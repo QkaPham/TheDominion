@@ -15,8 +15,13 @@ namespace Project3D
             health = GetComponent<Health>();
         }
 
-        private void OnEnable() => health.Defeated += OnDefeate;
-        private void OnDisable() => health.Defeated -= OnDefeate;
+        private void Awake()
+        {
+            playerTransform = FindObjectOfType<PlayerController>().transform;
+        }
+
+        private void OnEnable() => health.Defeat += OnDefeate;
+        private void OnDisable() => health.Defeat -= OnDefeate;
 
         private void OnDefeate() => CreateGold(5, Vector3.up);
 
