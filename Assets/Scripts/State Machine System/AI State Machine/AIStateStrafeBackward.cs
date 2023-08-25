@@ -13,7 +13,7 @@ namespace Project3D
         [SerializeField] protected float moveSpeed = 1.5f;
         [SerializeField] private float rotationSpeed = 360f;
 
-        public override bool HasTransitionRequest() => targetDetector.DistanceToTarget >= desireDistance;
+        public override bool HasTransitionRequest() => targetDetector.DistanceToDestination >= desireDistance;
 
         public override void Enter()
         {

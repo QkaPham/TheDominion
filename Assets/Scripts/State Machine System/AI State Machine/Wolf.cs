@@ -42,7 +42,8 @@ namespace Project3D
             AddTransition(idle, chase, () => targetDetector.HasTarget() && aiSkill.CanAttack);
             AddTransition(idle, strafeForward, () => targetDetector.HasTarget() && !aiSkill.CanAttack);
 
-            AddTransition(chase, attack, () => targetDetector.DistanceToTarget <= aiSkill.SkillRange);
+            //AddTransition(chase, attack, () => targetDetector.DistanceToTarget <= aiSkill.SkillRange);
+            AddTransition(chase, attack, () => targetDetector.DistanceToDestination <= aiSkill.SkillRange);
             AddTransition(chase, idle, () => !targetDetector.HasTarget());
 
             AddTransition(attack, strafeBackward, () => GetCurrentState().HasTransitionRequest() && targetDetector.HasTarget());

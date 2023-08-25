@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.08235098, g: 0.11733295, b: 0.21822296, a: 1}
+  m_IndirectSpecularColor: {r: 0.082350865, g: 0.117332794, b: 0.21822272, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1427,7 +1427,7 @@ GameObject:
   - component: {fileID: 321913770}
   - component: {fileID: 321913769}
   - component: {fileID: 321913768}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Cube (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2120,37 +2120,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 373349785}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!1 &378316877
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 378316879}
-  m_Layer: 0
-  m_Name: Enemy Spawner
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &378316879
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 378316877}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &395481609
 GameObject:
   m_ObjectHideFlags: 0
@@ -4919,7 +4888,7 @@ GameObject:
   - component: {fileID: 1019622748}
   - component: {fileID: 1019622747}
   - component: {fileID: 1019622746}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Cube (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6636,7 +6605,7 @@ GameObject:
   - component: {fileID: 1306833305}
   - component: {fileID: 1306833304}
   - component: {fileID: 1306833303}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Cube (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -8011,8 +7980,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1542274806}
-  - component: {fileID: 1542274807}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Target
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -8034,29 +8002,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1824539561}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!136 &1542274807
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1542274805}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.5
-  m_Height: 1
-  m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1547249951
 GameObject:
   m_ObjectHideFlags: 0
@@ -8748,7 +8693,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1645792970}
   - component: {fileID: 1645792971}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Ground
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9608,7 +9553,7 @@ GameObject:
   - component: {fileID: 1740739411}
   - component: {fileID: 1740739410}
   - component: {fileID: 1740739409}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Ground
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10224,7 +10169,7 @@ GameObject:
   - component: {fileID: 1811979123}
   - component: {fileID: 1811979122}
   - component: {fileID: 1811979121}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Stairs
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -13607,7 +13552,7 @@ GameObject:
   - component: {fileID: 1974206920}
   - component: {fileID: 1974206919}
   - component: {fileID: 1974206918}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14757,7 +14702,7 @@ PrefabInstance:
     - target: {fileID: 7309152532510841725, guid: 2e6576305c67e41468f2e31b869d7a42,
         type: 3}
       propertyPath: m_Layer
-      value: 0
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 7309152532510841725, guid: 2e6576305c67e41468f2e31b869d7a42,
         type: 3}
@@ -14766,8 +14711,13 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7615564211420135549, guid: 2e6576305c67e41468f2e31b869d7a42,
         type: 3}
+      propertyPath: TargetPoint
+      value: 
+      objectReference: {fileID: 1542274806}
+    - target: {fileID: 7615564211420135549, guid: 2e6576305c67e41468f2e31b869d7a42,
+        type: 3}
       propertyPath: groundLayer.m_Bits
-      value: 137
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 8085986612993642868, guid: 2e6576305c67e41468f2e31b869d7a42,
         type: 3}
@@ -14972,7 +14922,6 @@ SceneRoots:
   - {fileID: 1521181290}
   - {fileID: 8130873171922983810}
   - {fileID: 9147079939240200692}
-  - {fileID: 378316879}
   - {fileID: 26044668}
   - {fileID: 1773191496}
   - {fileID: 1534524212}

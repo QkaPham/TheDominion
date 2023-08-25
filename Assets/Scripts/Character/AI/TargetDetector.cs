@@ -13,11 +13,14 @@ namespace Project3D
         [SerializeField] private Transform lookAtPoint;
         [SerializeField] private Rig lookAtRig;
         [SerializeField] private float lookSmoothTime = 0.1f;
+        [SerializeField] private LayerMask groundLayer = 1 << 0 | 1 << 3;
+
         public bool Look { get; set; } = true;
 
         private Collider[] targets;
         [field: SerializeField] public Transform Target { get; private set; }
         public Vector3 TargetDirection => Target.position - transform.position;
+                                                                                                             
         public float DistanceToTarget
         {
             get
@@ -26,6 +29,19 @@ namespace Project3D
                 return Vector3.Distance(transform.position, Target.position);
             }
         }
+
+        public Vector3 Destination
+        {
+            get
+            {
+                if (!HasTarget()) return transform.position;
+                Physics.Raycast(Target.position, Vector3.down, out var hitInfo, 256f, groundLayer);
+                return hitInfo.point;
+            }
+        }
+
+        public float DistanceToDestination => Vector3.Distance(transform.position, Destination);
+
 
         private void Awake()
         {
@@ -58,7 +74,7 @@ namespace Project3D
                 return;
             }
 
-            Target = targets[0].transform;
+            Target = targets[0].GetComponent<PlayerController>().TargetPoint;
         }
 
         public void GetTargetInRadius()
@@ -70,7 +86,7 @@ namespace Project3D
                 return;
             }
 
-            Target = targets[0].transform;
+            Target = targets[0].GetComponent<PlayerController>().TargetPoint;
         }
 
         private void LookAtTarget()

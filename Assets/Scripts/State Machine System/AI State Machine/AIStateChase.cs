@@ -14,7 +14,7 @@ namespace Project3D
         [SerializeField] protected float startAttackDistance = 1.5f;
         [SerializeField] protected float maxTime = 3f;
 
-        public bool ReachAttackRange() => targetDetector.DistanceToTarget <= startAttackDistance;
+        public bool ReachAttackRange() => targetDetector.DistanceToDestination <= startAttackDistance;
         public bool TimeOut => StateDuration >= maxTime;
 
         public override void Enter()
@@ -26,7 +26,7 @@ namespace Project3D
 
         public override void LogicUpdate()
         {
-            agent.SetDestination(targetDetector.Target.position);
+            agent.SetDestination(targetDetector.Destination);
         }
     }
 }

@@ -39,7 +39,7 @@ namespace Project3D
             health.Heal(recovery);
         }
 
-        private void Refill()
+        public void Refill()
         {
             quantity = maxQuantity;
         }

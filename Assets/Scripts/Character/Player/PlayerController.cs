@@ -17,6 +17,9 @@ namespace Project3D
         [SerializeField] public Vector3 velocity;
         [SerializeField] public Vector3 acceleration;
 
+        [SerializeField] private bool useRootMotion = false;
+        [field: SerializeField] public Transform TargetPoint { get; private set; }
+
         private Quaternion targetRotation = Quaternion.identity;
         private float rotationSpeed = 1200f; // turn 180 deg in 0.15s
 
@@ -25,7 +28,6 @@ namespace Project3D
         public bool IsFalling => velocity.y < 0 && !IsGrounded;
 
         public event System.Action DeathEvent;
-        [SerializeField] private bool useRootMotion = false;
         private float slideTimer;
         public override void LoadComponent()
         {
