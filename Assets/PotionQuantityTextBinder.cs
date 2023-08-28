@@ -13,6 +13,7 @@ namespace Project3D
             base.LoadComponent();
 
             text = GetComponent<TMP_Text>();
+            potion = FindObjectOfType<Potion>();
         }
 
         private void UpdateText()
