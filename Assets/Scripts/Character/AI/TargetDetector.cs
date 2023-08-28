@@ -74,7 +74,7 @@ namespace Project3D
                 return;
             }
 
-            Target = targets[0].GetComponent<PlayerController>().TargetPoint;
+            Target = targets[0].transform.root.GetComponent<PlayerController>().TargetPoint;
         }
 
         public void GetTargetInRadius()
@@ -86,7 +86,7 @@ namespace Project3D
                 return;
             }
 
-            Target = targets[0].GetComponent<PlayerController>().TargetPoint;
+            Target = targets[0].transform.root.GetComponent<PlayerController>().TargetPoint;
         }
 
         private void LookAtTarget()

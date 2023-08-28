@@ -7,9 +7,9 @@ namespace Project3D
         [SerializeField] private Stat endure;
         [HideInInspector] public override float MaxHealth => endure.Value;
 
-        protected void Start() => endure.UpgradeEvent += OnStatUpgrade;
+        protected void Start() => endure.OnLevelChange += OnStatUpgrade;
 
-        protected void OnDestroy() => endure.UpgradeEvent -= OnStatUpgrade;
+        protected void OnDestroy() => endure.OnLevelChange -= OnStatUpgrade;
 
         private void OnStatUpgrade(int level) => HealFull();
     }

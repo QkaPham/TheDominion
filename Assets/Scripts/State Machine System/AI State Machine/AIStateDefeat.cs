@@ -16,5 +16,15 @@ namespace Project3D
             targetDetector.Look = false;
             agent.enabled = false;
         }
+
+        public override void LogicUpdate()
+        {
+            base.LogicUpdate();
+
+            if (animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.99f && animator.GetCurrentAnimatorStateInfo(0).IsName(StateName))
+            {
+                GameObject.Destroy(stateMachine.gameObject);
+            }
+        }
     }
 }

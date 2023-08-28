@@ -17,10 +17,6 @@ namespace Project3D
         {
             base.Enter();
 
-            if (!targetDetector.HasTarget())
-            {
-                ai.StopAttackFor(DelayAttackTime);
-            }
             targetDetector.Look = false;
             agent.enabled = false;
         }

@@ -14,9 +14,9 @@ namespace Project3D
             LevelText = GetComponent<TMP_Text>();
         }
 
-        private void Start() => stat.UpgradeEvent += UpdateUI;
+        private void Start() => stat.OnLevelChange += UpdateUI;
 
-        private void OnDestroy() => stat.UpgradeEvent -= UpdateUI;
+        private void OnDestroy() => stat.OnLevelChange -= UpdateUI;
 
         private void UpdateUI(int level)
         {

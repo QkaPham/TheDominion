@@ -15,3 +15,4 @@ MonoBehaviour:
   id: 0
   Base: 100
   Increment: 0.1
+  level: 5

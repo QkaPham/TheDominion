@@ -4,10 +4,12 @@ namespace Project3D
 {
     public class GoldSpawner : MyMonoBehaviour
     {
-        [SerializeField]private Health health;
-        
+        [SerializeField] private Health health;
+
         [SerializeField] private Gold goldPrefab;
         [SerializeField] private Transform playerTransform;
+
+        [SerializeField] private int drop = 100;
 
         public override void LoadComponent()
         {
@@ -23,7 +25,7 @@ namespace Project3D
         private void OnEnable() => health.Defeat += OnDefeate;
         private void OnDisable() => health.Defeat -= OnDefeate;
 
-        private void OnDefeate() => CreateGold(5, Vector3.up);
+        private void OnDefeate() => CreateGold(drop, Vector3.up);
 
         public void CreateGold(int value, Vector3 velocity)
         {

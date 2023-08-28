@@ -7,15 +7,19 @@ namespace Project3D
         [SerializeField] private GameObject enemyPrefab;
         private bool Alive = false;
 
-        private void Start()
+        private void OnEnable()
         {
-            Spawn();
             CheckPoint.InteractEvent += Spawn;
         }
 
-        private void OnDestroy()
+        private void OnDisable()
         {
             CheckPoint.InteractEvent -= Spawn;
+        }
+
+        private void Start()
+        {
+            Spawn();
         }
 
         public void Spawn()

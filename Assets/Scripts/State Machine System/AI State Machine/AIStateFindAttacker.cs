@@ -14,13 +14,6 @@ namespace Project3D
 
         public bool TimeOut => StateDuration >= maxTime;
 
-        public override void Enter()
-        {
-            base.Enter();
-
-            ai.StopAttackFor(delayAttackTime);
-        }
-
         public override void PhysicUpdate()
         {
             base.PhysicUpdate();

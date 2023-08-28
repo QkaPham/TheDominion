@@ -167,6 +167,7 @@ MonoBehaviour:
   goldPrefab: {fileID: 6872125470202245241, guid: de0a593395efb73409617352e988847d,
     type: 3}
   playerTransform: {fileID: 0}
+  drop: 100
 --- !u!114 &1415399315368223209
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -189,6 +190,9 @@ MonoBehaviour:
   lookAtPoint: {fileID: 1483035383125622758}
   lookAtRig: {fileID: 1699020222320740925}
   lookSmoothTime: 0.1
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 9
   <Target>k__BackingField: {fileID: 0}
 --- !u!65 &4851758232504893367
 BoxCollider:
@@ -255,7 +259,7 @@ MonoBehaviour:
   damage: 3
   damageableLayer:
     serializedVersion: 2
-    m_Bits: 1
+    m_Bits: 64
 --- !u!136 &7741660747585522910
 CapsuleCollider:
   m_ObjectHideFlags: 0

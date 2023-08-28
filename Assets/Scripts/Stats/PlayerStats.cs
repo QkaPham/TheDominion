@@ -3,9 +3,18 @@ using UnityEngine;
 
 namespace Project3D
 {
-    public class Stats : MyMonoBehaviour
+    public class PlayerStats : MyMonoBehaviour
     {
         [SerializeField] private Stat[] stats;
+
+        private void Start()
+        {
+            foreach (Stat stat in stats)
+            {
+                stat.Level = 0;
+            }
+        }
+
 
         public Stat GetStat(StatID statID)
         {
