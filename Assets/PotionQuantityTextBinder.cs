@@ -16,9 +16,19 @@ namespace Project3D
             potion = FindObjectOfType<Potion>();
         }
 
+        private void OnEnable()
+        {
+            potion.QuantityChanged += UpdateText;
+        }
+
+        private void OnDisable()
+        {
+            potion.QuantityChanged -= UpdateText;
+        }
+
         private void UpdateText()
         {
-            text.text = "";
+            text.text = $"{potion.Quantity}/{potion.MaxQuantity}";
         }
     }
 }

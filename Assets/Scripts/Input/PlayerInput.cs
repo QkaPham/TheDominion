@@ -65,6 +65,8 @@ namespace Project3D
         public bool Dash => Controls.Player.Dash.WasPressedThisFrame();
         public bool UsePotion => Controls.Player.UsePotion.WasPressedThisFrame();
 
+        public bool Command => Controls.Player.Command.WasPressedThisFrame();
+
 
         public bool Cancel => Controls.UI.Cancel.WasPressedThisFrame();
 
@@ -129,11 +131,5 @@ namespace Project3D
             eventSystem.enabled = enable;
             Cursor.lockState = enable ? CursorLockMode.None : CursorLockMode.Locked;
         }
-    }
-
-    public enum ControlsID
-    {
-        Player,
-        UI
     }
 }

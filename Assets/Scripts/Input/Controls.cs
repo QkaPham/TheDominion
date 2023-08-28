@@ -100,6 +100,15 @@ namespace Project3D
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Command"",
+                    ""type"": ""Button"",
+                    ""id"": ""3f170a56-af6e-4ac5-81b3-cb11410facb7"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -381,11 +390,22 @@ namespace Project3D
                 {
                     ""name"": """",
                     ""id"": ""6e341c81-266d-4afc-aea9-0c3b0a60f91d"",
-                    ""path"": ""<Keyboard>/1"",
+                    ""path"": ""<Keyboard>/e"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""UsePotion"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""acf66f19-8217-4740-a1c4-7cb7f4f8006f"",
+                    ""path"": ""<Keyboard>/backquote"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Command"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -920,6 +940,7 @@ namespace Project3D
             m_Player_Interact = m_Player.FindAction("Interact", throwIfNotFound: true);
             m_Player_Pause = m_Player.FindAction("Pause", throwIfNotFound: true);
             m_Player_UsePotion = m_Player.FindAction("UsePotion", throwIfNotFound: true);
+            m_Player_Command = m_Player.FindAction("Command", throwIfNotFound: true);
             // UI
             m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
             m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -1001,6 +1022,7 @@ namespace Project3D
         private readonly InputAction m_Player_Interact;
         private readonly InputAction m_Player_Pause;
         private readonly InputAction m_Player_UsePotion;
+        private readonly InputAction m_Player_Command;
         public struct PlayerActions
         {
             private @Controls m_Wrapper;
@@ -1013,6 +1035,7 @@ namespace Project3D
             public InputAction @Interact => m_Wrapper.m_Player_Interact;
             public InputAction @Pause => m_Wrapper.m_Player_Pause;
             public InputAction @UsePotion => m_Wrapper.m_Player_UsePotion;
+            public InputAction @Command => m_Wrapper.m_Player_Command;
             public InputActionMap Get() { return m_Wrapper.m_Player; }
             public void Enable() { Get().Enable(); }
             public void Disable() { Get().Disable(); }
@@ -1046,6 +1069,9 @@ namespace Project3D
                 @UsePotion.started += instance.OnUsePotion;
                 @UsePotion.performed += instance.OnUsePotion;
                 @UsePotion.canceled += instance.OnUsePotion;
+                @Command.started += instance.OnCommand;
+                @Command.performed += instance.OnCommand;
+                @Command.canceled += instance.OnCommand;
             }
 
             private void UnregisterCallbacks(IPlayerActions instance)
@@ -1074,6 +1100,9 @@ namespace Project3D
                 @UsePotion.started -= instance.OnUsePotion;
                 @UsePotion.performed -= instance.OnUsePotion;
                 @UsePotion.canceled -= instance.OnUsePotion;
+                @Command.started -= instance.OnCommand;
+                @Command.performed -= instance.OnCommand;
+                @Command.canceled -= instance.OnCommand;
             }
 
             public void RemoveCallbacks(IPlayerActions instance)
@@ -1219,6 +1248,7 @@ namespace Project3D
             void OnInteract(InputAction.CallbackContext context);
             void OnPause(InputAction.CallbackContext context);
             void OnUsePotion(InputAction.CallbackContext context);
+            void OnCommand(InputAction.CallbackContext context);
         }
         public interface IUIActions
         {

@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 namespace Project3D
@@ -9,7 +10,20 @@ namespace Project3D
 
         [SerializeField] private float recovery = 40;
         [SerializeField] private int maxQuantity = 3;
-         private int quantity = 3;
+        public int MaxQuantity => maxQuantity;
+        private int quantity = 3;
+
+        public int Quantity
+        {
+            get => quantity;
+            private set
+            {
+                quantity = value;
+                QuantityChanged?.Invoke();
+            }
+        }
+
+        public event Action QuantityChanged;
 
         public override void LoadComponent()
         {
@@ -33,15 +47,15 @@ namespace Project3D
 
         private void UsePotion()
         {
-            if (quantity <= 0) return;
+            if (Quantity <= 0) return;
 
-            quantity--;
+            Quantity--;
             health.Heal(recovery);
         }
 
         public void Refill()
         {
-            quantity = maxQuantity;
+            Quantity = maxQuantity;
         }
     }
 }

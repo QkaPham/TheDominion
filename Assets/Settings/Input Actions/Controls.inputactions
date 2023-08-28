@@ -76,6 +76,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "Command",
+                    "type": "Button",
+                    "id": "3f170a56-af6e-4ac5-81b3-cb11410facb7",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -357,11 +366,22 @@
                 {
                     "name": "",
                     "id": "6e341c81-266d-4afc-aea9-0c3b0a60f91d",
-                    "path": "<Keyboard>/1",
+                    "path": "<Keyboard>/e",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
                     "action": "UsePotion",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "acf66f19-8217-4740-a1c4-7cb7f4f8006f",
+                    "path": "<Keyboard>/backquote",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Command",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 namespace Project3D
 {
@@ -7,30 +6,35 @@ namespace Project3D
     {
         [SerializeField] PlayerInput input;
         [SerializeField] CanvasGroup canvasGroup;
-        bool isShown;
+
+        public override void LoadComponent()
+        {
+            base.LoadComponent();
+
+            input = FindObjectOfType<PlayerInput>();
+            canvasGroup = GetComponent<CanvasGroup>();
+        }
 
         private void Start()
         {
-            input = FindAnyObjectByType<PlayerInput>();
-            canvasGroup = GetComponent<CanvasGroup>();
             Hide();
         }
 
         void Update()
         {
-            if (Keyboard.current.tabKey.wasPressedThisFrame)
+            if (input.Command)
             {
-                isShown = !isShown;
-                if (isShown)
-                    Show();
-                else
-                    Hide();
+                Show();
+            }
+
+            if (input.Cancel)
+            {
+                Hide();
             }
         }
 
         private void Show()
         {
-            isShown = true;
             canvasGroup.alpha = 1;
             canvasGroup.interactable = true;
             canvasGroup.blocksRaycasts = true;
@@ -40,7 +44,6 @@ namespace Project3D
 
         private void Hide()
         {
-            isShown = false;
             canvasGroup.alpha = 0;
             canvasGroup.interactable = false;
             canvasGroup.blocksRaycasts = false;
