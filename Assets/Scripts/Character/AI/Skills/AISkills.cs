@@ -12,8 +12,8 @@ namespace Project3D
 
         protected List<Skill> skillList;
         [SerializeField] protected float coolDownTime = 5f;
-        [SerializeField] protected SkillPound pound;
-        [SerializeField] protected SkillBite bite;
+        //[SerializeField] protected SkillPound pound;
+        //[SerializeField] protected SkillBite bite;
         protected WaitForSeconds cooldown;
         public bool canAttack;
         public bool CanAttack
@@ -39,18 +39,9 @@ namespace Project3D
 
         private void Awake() => Initialize();
 
-        private void Initialize()
+        protected virtual void Initialize()
         {
-            skillList = new List<Skill>
-            {
-                pound,
-                bite,
-            };
-
-            foreach (Skill skill in skillList)
-            {
-                skill.Init(targetDetector);
-            }
+            skillList.ForEach(skill=> skill.Init(targetDetector));
             NextSkill = skillList[0];
             CanAttack = true;
             cooldown = new WaitForSeconds(coolDownTime);

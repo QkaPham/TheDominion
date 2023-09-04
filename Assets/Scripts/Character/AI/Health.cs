@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 namespace Project3D
@@ -16,7 +17,7 @@ namespace Project3D
             }
         }
 
-        public float LostHealth => MaxHealth - CurrentHealth;
+        public float LoseHealth => MaxHealth - CurrentHealth;
 
         public event System.Action Defeat;
         public event System.Action<float> HealthChanged;
@@ -41,7 +42,7 @@ namespace Project3D
 
         public void HealFull()
         {
-            var lostHealth = LostHealth;
+            var lostHealth = LoseHealth;
             CurrentHealth = MaxHealth;
             HealthChanged?.Invoke(lostHealth);
         }

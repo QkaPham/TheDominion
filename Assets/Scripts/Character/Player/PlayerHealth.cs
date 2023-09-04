@@ -5,7 +5,7 @@ namespace Project3D
     public class PlayerHealth : Health
     {
         [SerializeField] private Stat endure;
-        [HideInInspector] public override float MaxHealth => endure.Value;
+         public override float MaxHealth => endure.Value;
 
         protected void Start() => endure.OnLevelChange += OnStatUpgrade;
 

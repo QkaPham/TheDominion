@@ -29,6 +29,7 @@ namespace Project3D
             ai = GetComponent<AIController>();
             health = GetComponent<Health>();
             targetDetector = GetComponent<TargetDetector>();
+            aiSkill = GetComponent<AISkills>();
         }
 
         protected AIState GetCurrentState() => (AIState)currentState;

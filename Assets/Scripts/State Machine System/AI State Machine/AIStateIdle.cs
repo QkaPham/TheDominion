@@ -19,7 +19,7 @@ namespace Project3D
 
         public override void Exit()
         {
-            base.Exit(); 
+            base.Exit();
 
             agent.enabled = true;
         }
@@ -29,7 +29,10 @@ namespace Project3D
         {
             base.PhysicUpdate();
 
-            targetDetector.GetTargetForward();
+            if (!targetDetector.HasTarget())
+            {
+                targetDetector.GetTargetForward();
+            }
         }
     }
 }

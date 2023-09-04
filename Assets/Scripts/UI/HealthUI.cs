@@ -5,26 +5,26 @@ namespace Project3D
 {
     public class HealthUI : MyMonoBehaviour
     {
-        [SerializeField] private Health health;
-        [SerializeField] private Image healthImage;
+        [SerializeField] protected Health health;
+        [SerializeField] protected Image healthImage;
 
         public override void LoadComponent()
         {
-            base.LoadComponent();
-            healthImage = GetComponent<Image>();
+            base.LoadComponent();      
+            health = GetComponentInParent<Health>();
         }
 
-        private void Start()
+        private void OnEnable()
         {
             health.HealthChanged += UpdateHealth;
         }
 
-        private void OnDestroy()
+        private void OnDisable()
         {
             health.HealthChanged -= UpdateHealth;
         }
 
-        private void UpdateHealth(float changeValue)
+        protected virtual void UpdateHealth(float changeValue)
         {
             healthImage.fillAmount = health.CurrentHealth / health.MaxHealth;
         }

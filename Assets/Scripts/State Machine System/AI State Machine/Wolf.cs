@@ -15,16 +15,6 @@ namespace Project3D
         [SerializeField] protected AIStateHurt hurt;
         [SerializeField] protected AIStateDefeat defeat;
 
-        public override void LoadComponent()
-        {
-            base.LoadComponent();
-            animator = GetComponentInChildren<Animator>();
-            ai = GetComponent<AIController>();
-            health = GetComponent<Health>();
-            targetDetector = GetComponent<TargetDetector>();
-            aiSkill = GetComponent<AISkills>();
-        }
-
         protected override void Awake()
         {
             base.Awake();
@@ -42,7 +32,6 @@ namespace Project3D
             AddTransition(idle, chase, () => targetDetector.HasTarget() && aiSkill.CanAttack);
             AddTransition(idle, strafeForward, () => targetDetector.HasTarget() && !aiSkill.CanAttack);
 
-            //AddTransition(chase, attack, () => targetDetector.DistanceToTarget <= aiSkill.SkillRange);
             AddTransition(chase, attack, () => targetDetector.DistanceToDestination <= aiSkill.SkillRange);
             AddTransition(chase, idle, () => !targetDetector.HasTarget());
 
@@ -76,16 +65,15 @@ namespace Project3D
             }
         }
 
-        private void Start()
+        private void OnEnable()
         {
-            SwitchOn(idle);
-
             health.HealthChanged += TransitionOntakeDamage;
             health.Defeat += OnDefeat;
         }
 
+        private void Start() => SwitchOn(idle);
 
-        private void OnDestroy()
+        private void OnDisable()
         {
             health.HealthChanged -= TransitionOntakeDamage;
             health.Defeat -= OnDefeat;
@@ -103,7 +91,5 @@ namespace Project3D
         {
             SwitchState(defeat);
         }
-
-
     }
 }
