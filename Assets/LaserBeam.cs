@@ -63,12 +63,12 @@ namespace Project3D
 
         private void Shoot()
         {
-            laserBeam.SetPosition(0, transform.position);
+            //laserBeam.SetPosition(0, transform.position);
 
             if (Physics.Raycast(transform.position, transform.forward, out var hitInfo, distance, targetLayer))
             {
 
-                laserBeam.SetPosition(1, hitInfo.point);
+                //laserBeam.SetPosition(1, hitInfo.point);
 
                 hitFxTransform.transform.position = hitInfo.point;
                 hitFxTransform.forward = hitInfo.normal;
@@ -91,8 +91,8 @@ namespace Project3D
             }
             else
             {
-
-                laserBeam.SetPosition(1, transform.position + transform.forward * distance);
+                //laserBeam.SetPosition(1, )
+                //laserBeam.SetPosition(1, transform.position + transform.forward * distance);
 
                 foreach (var hitFx in hitFxs)
                 {
