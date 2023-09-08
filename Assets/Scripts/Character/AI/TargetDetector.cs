@@ -14,13 +14,14 @@ namespace Project3D
         [SerializeField] private Rig lookAtRig;
         [SerializeField] private float lookSmoothTime = 0.1f;
         [SerializeField] private LayerMask groundLayer = 1 << 0 | 1 << 3;
+        [SerializeField] private float lookSpeed;
 
         public bool Look { get; set; } = true;
 
         private Collider[] targets;
         [field: SerializeField] public Transform Target { get; private set; }
         public Vector3 TargetDirection => Target.position - transform.position;
-                                                                                                             
+
         public float DistanceToTarget
         {
             get
@@ -95,7 +96,7 @@ namespace Project3D
             {
                 if (lookAtRig.weight < 1)
                     lookAtRig.weight = Mathf.MoveTowards(lookAtRig.weight, 1, lookSmoothTime);
-                lookAtPoint.transform.position = Target.position;
+                lookAtPoint.position = Vector3.MoveTowards(lookAtPoint.position, Target.position, lookSpeed * Time.deltaTime);
             }
             else
             {
