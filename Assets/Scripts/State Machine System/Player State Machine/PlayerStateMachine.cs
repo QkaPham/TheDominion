@@ -91,16 +91,6 @@ namespace Project3D
         private void Start()
         {
             SwitchOn(idle);
-            //health.Defeated += Defeated;
-        }
-
-        //private void OnDestroy() => health.Defeated -= Defeated;
-
-        //private void Defeated() => SwitchState(typeof(PlayerStateDefeat));
-
-        private void OnGUI()
-        {
-            GUI.Label(new Rect(20, 20, 400, 50), currentState.ToString());
         }
     }
 }

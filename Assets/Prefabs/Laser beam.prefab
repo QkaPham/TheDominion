@@ -47,15 +47,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 65c4f71d92973754787cade5d14cac24, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  flash: {fileID: 698158652795488026}
-  laserBeam: {fileID: 4883393363708002832}
+  laserBeamFx: {fileID: 4883393363708002832}
+  flashFx: {fileID: 698158652795488026}
   hitFxTransform: {fileID: 4375400932308334752}
-  distance: 5
+  hitFxs:
+  - {fileID: 587722703936367868}
+  - {fileID: 4857293892522126268}
+  - {fileID: 9039917806042922389}
+  - {fileID: 8799736637843966325}
+  - {fileID: 4221198629287883866}
+  distance: 10
   targetLayer:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 64
   timeBetweenDealingDamage: 0.2
   damage: 1
+  radius: 0.2
+  fireBreathEvent: {fileID: 0}
+  beamHolder: {fileID: 0}
+  enable: 1
 --- !u!120 &4883393363708002832
 LineRenderer:
   serializedVersion: 2
@@ -64,7 +74,7 @@ LineRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1600010207205131994}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 0
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -130,7 +140,7 @@ LineRenderer:
       m_RotationOrder: 4
     colorGradient:
       serializedVersion: 2
-      key0: {r: 1, g: 0, b: 0, a: 1}
+      key0: {r: 0, g: 0.028381804, b: 0.21698111, a: 1}
       key1: {r: 0, g: 0.25490198, b: 1, a: 1}
       key2: {r: 0, g: 0, b: 0, a: 0}
       key3: {r: 0, g: 0, b: 0, a: 0}
@@ -166,7 +176,7 @@ LineRenderer:
     shadowBias: 0
     generateLightingData: 0
   m_MaskInteraction: 0
-  m_UseWorldSpace: 1
+  m_UseWorldSpace: 0
   m_Loop: 0
   m_ApplyActiveColorSpace: 0
 --- !u!1 &2578624646467357325
@@ -9831,7 +9841,7 @@ Transform:
   m_GameObject: {fileID: 4673394617378091501}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0.01, y: -0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

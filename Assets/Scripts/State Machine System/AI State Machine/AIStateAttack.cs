@@ -18,7 +18,7 @@ namespace Project3D
         {
             base.Enter();
 
-            LookAtTarget();
+            RotateToTarget();
             stateMachine.UseSkill();
         }
 
@@ -48,9 +48,10 @@ namespace Project3D
 
             agent.stoppingDistance = 0f;
             agent.enabled = true;
+            targetDetector.Look = true;
         }
 
-        private void LookAtTarget()
+        private void RotateToTarget()
         {
             var direction = targetDetector.TargetDirection;
             direction.y = 0;

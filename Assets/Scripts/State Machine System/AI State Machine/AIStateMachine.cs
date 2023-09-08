@@ -13,8 +13,8 @@ namespace Project3D
         [SerializeField] protected TargetDetector targetDetector;
         [SerializeField] public Vector3 startPoint;
         [SerializeField] protected float activeRadius = 10f;
-        public int SkillHash => aiSkill.NextSkill.Hash;
-        public string SkillName => aiSkill.NextSkill.Name;
+        public int SkillHash => aiSkill.ReadySkill.Hash;
+        public string SkillName => aiSkill.ReadySkill.Name;
 
         protected virtual void Awake()
         {

@@ -26,8 +26,10 @@ namespace Project3D
 
             AddTransition(chase, attack, () => targetDetector.DistanceToDestination <= aiSkill.SkillRange);
             AddTransition(chase, idle, () => !targetDetector.HasTarget());
-
             AddTransition(attack, idle, () => GetCurrentState().HasTransitionRequest());
+
+            AddTransition(hurt, idle, () => GetCurrentState().HasTransitionRequest() && targetDetector.HasTarget() && !aiSkill.CanAttack);
+            AddTransition(hurt, chase, () => GetCurrentState().HasTransitionRequest() && targetDetector.HasTarget() && aiSkill.CanAttack);
         }
 
         private void OnEnable()

@@ -8,7 +8,7 @@ namespace Project3D
     public class SkillPound : Skill
     {
         [field: SerializeField] public override string Name { get; protected set; } = "Pound";
-        [field: SerializeField] public override float SkillRange { get; set; } = 3f;
+        [field: SerializeField] public override float Range { get; set; } = 3f;
 
         [SerializeField] protected float minDistanceToUse = 2f;
         [SerializeField] protected float stopDistance = 1f;

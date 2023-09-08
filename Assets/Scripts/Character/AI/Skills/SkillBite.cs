@@ -8,7 +8,7 @@ namespace Project3D
     public class SkillBite : Skill
     {
         [field: SerializeField] public override string Name { get;protected set; } = "Bite";
-        [field: SerializeField] public override float SkillRange { get; set; } = 1f;
+        [field: SerializeField] public override float Range { get; set; } = 1f;
 
         [SerializeField] protected float stopDistance = 1f;
         public override void Activate(NavMeshAgent agent)

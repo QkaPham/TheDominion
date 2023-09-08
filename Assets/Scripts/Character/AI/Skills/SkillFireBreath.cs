@@ -8,7 +8,7 @@ namespace Project3D
     public class SkillFireBreath : Skill
     {
         [field: SerializeField] public override string Name { get; protected set; } = "FireBreath";
-        [field: SerializeField] public override float SkillRange { get; set; } = 1f;
+        [field: SerializeField] public override float Range { get; set; } = 1f;
 
         [SerializeField] protected float stopDistance = 1f;
         public override void Activate(NavMeshAgent agent)
@@ -17,6 +17,7 @@ namespace Project3D
 
             agent.stoppingDistance = stopDistance;
             agent.enabled = false;
+            targetDetector.Look = false;
         }
     }
 }

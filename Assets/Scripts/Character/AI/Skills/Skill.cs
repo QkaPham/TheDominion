@@ -8,7 +8,7 @@ namespace Project3D
     public abstract class Skill
     {
         public abstract string Name { get; protected set; }
-        public abstract float SkillRange { get; set; }
+        public abstract float Range { get; set; }
 
         public int Hash { get; protected set; }
 

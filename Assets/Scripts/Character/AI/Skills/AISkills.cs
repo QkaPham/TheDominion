@@ -12,8 +12,6 @@ namespace Project3D
 
         protected List<Skill> skillList;
         [SerializeField] protected float coolDownTime = 5f;
-        //[SerializeField] protected SkillPound pound;
-        //[SerializeField] protected SkillBite bite;
         protected WaitForSeconds cooldown;
         public bool canAttack;
         public bool CanAttack
@@ -26,9 +24,9 @@ namespace Project3D
             }
         }
 
-        public Skill NextSkill { get; protected set; }
+        public Skill ReadySkill { get; protected set; }
 
-        public float SkillRange => NextSkill.SkillRange;
+        public float SkillRange => ReadySkill.Range;
 
         public override void LoadComponent()
         {
@@ -37,19 +35,19 @@ namespace Project3D
             targetDetector = GetComponent<TargetDetector>();
         }
 
-        private void Awake() => Initialize();
+        protected void Awake() => Initialize();
 
         protected virtual void Initialize()
         {
             skillList.ForEach(skill=> skill.Init(targetDetector));
-            NextSkill = skillList[0];
             CanAttack = true;
             cooldown = new WaitForSeconds(coolDownTime);
+            ChooseSkill();
         }
 
         public void Activate(NavMeshAgent agent)
         {
-            NextSkill.Activate(agent);
+            ReadySkill.Activate(agent);
             StartCoroutine(Cooldown());
         }
 
@@ -60,10 +58,10 @@ namespace Project3D
             CanAttack = true;
         }
 
-        public void ChooseSkill()
+        protected virtual void ChooseSkill()
         {
             var canUseSkills = skillList.Where(skill => skill.CanUse).ToList();
-            NextSkill = canUseSkills[Random.Range(0, canUseSkills.Count())];
+            ReadySkill = canUseSkills[Random.Range(0, canUseSkills.Count())];
         }
     }
 }

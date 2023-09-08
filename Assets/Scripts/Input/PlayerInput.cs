@@ -7,15 +7,13 @@ namespace Project3D
 {
     public class PlayerInput : MyMonoBehaviour
     {
-        [SerializeField] private CinemachineInputProvider freeLookCameraInput;
-
+        private CinemachineInputProvider freeLookCameraInput;
 
         [SerializeField] private ControlsID startControls = ControlsID.UI;
         public Controls Controls { get; private set; }
         private EventSystem eventSystem;
-
-        private float camreraRotation;
-        public Vector2 MoveAxes => Quaternion.Euler(0, 0, -camreraRotation) * Controls.Player.Move.ReadValue<Vector2>();
+        private float CamreraRotation => Camera.main.transform.rotation.eulerAngles.y;
+        public Vector2 MoveAxes => Quaternion.Euler(0, 0, -CamreraRotation) * Controls.Player.Move.ReadValue<Vector2>();
         public Vector3 MoveAxesXZ
         {
             get
@@ -67,34 +65,18 @@ namespace Project3D
 
         public bool Command => Controls.Player.Command.WasPressedThisFrame();
 
-
         public bool Cancel => Controls.UI.Cancel.WasPressedThisFrame();
-
-        public override void LoadComponent()
-        {
-            freeLookCameraInput = FindObjectOfType<CinemachineInputProvider>();
-        }
 
         private void Awake()
         {
             Controls = new Controls();
             eventSystem = EventSystem.current;
-
-            SwitchControls(startControls);
+            freeLookCameraInput = FindObjectOfType<CinemachineInputProvider>();
         }
 
-        private void Update()
+        private void Start()
         {
-            camreraRotation = Camera.main.transform.rotation.eulerAngles.y;
-
-            //if (Keyboard.current.leftAltKey.wasPressedThisFrame)
-            //{
-            //    EnableUIInput(true);
-            //}
-            //if (Keyboard.current.leftAltKey.wasReleasedThisFrame)
-            //{
-            //    EnableUIInput(false);
-            //}
+            SwitchControls(startControls);
         }
 
         private void OnEnable()

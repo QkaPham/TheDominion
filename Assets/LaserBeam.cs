@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -5,38 +6,47 @@ namespace Project3D
 {
     public class LaserBeam : MyMonoBehaviour
     {
-        [SerializeField] private ParticleSystem flash;
-        [SerializeField] private LineRenderer laserBeam;
+        [SerializeField] private LineRenderer laserBeamFx;
+        [SerializeField] private ParticleSystem flashFx;
         [SerializeField] private Transform hitFxTransform;
+        [SerializeField] private ParticleSystem[] hitFxs;
         [SerializeField] private float distance;
         [SerializeField] private LayerMask targetLayer;
         [SerializeField] private float timeBetweenDealingDamage;
         [SerializeField] private float damage;
+        [SerializeField] private float radius;
+        [SerializeField] private AnimationEventFireBreath fireBreathEvent;
+        [SerializeField] private Transform beamHolder;
 
-        private ParticleSystem[] hitFxs;
-        private bool enable;
+        public bool enable;
         private float lastDealingDamageTime;
+
+
 
         public override void LoadComponent()
         {
             base.LoadComponent();
 
-            laserBeam = GetComponent<LineRenderer>();
+            laserBeamFx = GetComponent<LineRenderer>();
+            flashFx = transform.Find("Flash").GetComponent<ParticleSystem>();
             hitFxTransform = transform.Find("Hit");
+            hitFxs = hitFxTransform.GetComponentsInChildren<ParticleSystem>();
         }
 
-        private void Awake()
+        private void OnEnable()
         {
-            hitFxs = GetComponentsInChildren<ParticleSystem>();
+            fireBreathEvent.FireBreathStart += Toggle;
+            fireBreathEvent.FireBreathEnd += Toggle;
+        }
+
+        private void OnDisable()
+        {
+            fireBreathEvent.FireBreathStart -= Toggle;
+            fireBreathEvent.FireBreathEnd -= Toggle;
         }
 
         private void Update()
         {
-            if (Keyboard.current.uKey.wasPressedThisFrame)
-            {
-                Toggle();
-            }
-
             if (enable)
             {
                 Shoot();
@@ -45,15 +55,16 @@ namespace Project3D
 
         public void Toggle()
         {
-            laserBeam.enabled = !laserBeam.enabled;
             enable = !enable;
+
+            laserBeamFx.enabled = enable;
             if (enable)
             {
-                flash.Play();
+                flashFx.Play();
             }
             else
             {
-                flash.Stop();
+                flashFx.Stop();
                 foreach (var hitFx in hitFxs)
                 {
                     hitFx.Stop();
@@ -63,13 +74,8 @@ namespace Project3D
 
         private void Shoot()
         {
-            //laserBeam.SetPosition(0, transform.position);
-
-            if (Physics.Raycast(transform.position, transform.forward, out var hitInfo, distance, targetLayer))
+            if (Physics.SphereCast(transform.position, radius, beamHolder.forward, out var hitInfo, distance, targetLayer))
             {
-
-                //laserBeam.SetPosition(1, hitInfo.point);
-
                 hitFxTransform.transform.position = hitInfo.point;
                 hitFxTransform.forward = hitInfo.normal;
 
@@ -80,26 +86,27 @@ namespace Project3D
 
                 if (Time.time - lastDealingDamageTime > timeBetweenDealingDamage)
                 {
-                    var health = hitInfo.collider.GetComponent<Health>();
+                    var health = hitInfo.collider.GetComponent<PlayerHealth>();
                     if (health != null)
                     {
                         health.TakeDamage(damage);
                     }
                     lastDealingDamageTime = Time.time;
                 }
-
             }
             else
             {
-                //laserBeam.SetPosition(1, )
-                //laserBeam.SetPosition(1, transform.position + transform.forward * distance);
-
                 foreach (var hitFx in hitFxs)
                 {
                     hitFx.Stop();
                 }
             }
 
+        }
+
+        private void OnDrawGizmos()
+        {
+            Gizmos.DrawRay(transform.position, beamHolder.forward * distance);
         }
     }
 }
