@@ -1,7 +1,6 @@
 using Cinemachine;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.InputSystem;
 
 namespace Project3D
 {
@@ -103,7 +102,7 @@ namespace Project3D
         {
             if (enable) Controls.Player.Enable();
             else Controls.Player.Disable();
-            freeLookCameraInput.enabled = enable;
+            //freeLookCameraInput.enabled = enable;
         }
 
         public void EnableUIInput(bool enable)

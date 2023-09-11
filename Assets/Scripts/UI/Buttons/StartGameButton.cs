@@ -4,10 +4,11 @@ namespace Project3D
 {
     public class StartGameButton : ButtonBinder
     {
+        [SerializeField] private SceneLoader loader;
+
         protected override void OnClick()
         {
-            Debug.Log("Start Game");
-            Debug.Log("Load Game");
+            loader.LoadScene("Game");
         }
     }
 }

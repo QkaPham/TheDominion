@@ -13,6 +13,7 @@ namespace Project3D
 
         protected AIController ai;
         protected Animator animator;
+        protected AILook aiLook;
         protected AIStateMachine stateMachine;
         protected NavMeshAgent agent;
         protected TargetDetector targetDetector;
@@ -20,13 +21,14 @@ namespace Project3D
         protected float enterTime;
         protected float StateDuration => Time.time - enterTime;
 
-        public void Initialize(Animator animator, AIController ai, NavMeshAgent agent, TargetDetector targetDetector, AIStateMachine stateMachine)
+        public void Initialize(Animator animator, AIController ai, NavMeshAgent agent, TargetDetector targetDetector, AILook aiLook, AIStateMachine stateMachine)
         {
             this.ai = ai;
             this.animator = animator;
             this.stateMachine = stateMachine;
             this.agent = agent;
             this.targetDetector = targetDetector;
+            this.aiLook = aiLook;   
             StateHash = Animator.StringToHash(StateName);
         }
 

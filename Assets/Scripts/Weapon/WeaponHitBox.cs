@@ -53,13 +53,6 @@ namespace Project3D
                     return;
                 }
             }
-            //var hitbox = GetHitBox(attackName);
-            //if (hitbox != null) hitbox.DealDamage(strength.Value, damageableLayer);
         }
-
-        //private HitBox GetHitBox(string attackName)
-        //{
-        //    return hitBoxes.FirstOrDefault(hitBox => hitBox.AttackName == attackName);
-        //}
     }
 }

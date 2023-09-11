@@ -73,9 +73,20 @@ namespace Project3D
         {
             if (duration <= 0f)
             {
-                rectTransform.localPosition = showPosition;
-                transform.localScale = Vector3.one;
-                canvasGroup.alpha = 1;
+                if (type.HasFlag(ViewAnimationType.Slide))
+                {
+                    rectTransform.localPosition = showPosition;
+                }
+
+                if (type.HasFlag(ViewAnimationType.Zoom))
+                {
+                    transform.localScale = Vector3.one;
+                }
+
+                if (type.HasFlag(ViewAnimationType.Fade))
+                {
+                    canvasGroup.alpha = 1;
+                }
                 yield break;
             }
 
@@ -117,9 +128,20 @@ namespace Project3D
 
             if (duration <= 0f)
             {
-                rectTransform.localPosition = hidePosition;
-                transform.localScale = Vector3.zero;
-                canvasGroup.alpha = 0;
+                if (type.HasFlag(ViewAnimationType.Slide))
+                {
+                    rectTransform.localPosition = hidePosition;
+                }
+
+                if (type.HasFlag(ViewAnimationType.Zoom))
+                {
+                    transform.localScale = Vector3.zero;
+                }
+
+                if (type.HasFlag(ViewAnimationType.Fade))
+                {
+                    canvasGroup.alpha = 0;
+                }
                 yield break;
             }
 

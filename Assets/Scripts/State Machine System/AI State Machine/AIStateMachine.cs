@@ -7,14 +7,13 @@ namespace Project3D
     {
         [SerializeField] protected Animator animator;
         [SerializeField] protected AIController ai;
-        [SerializeField] protected AISkills aiSkill;
+        [field: SerializeField] public AISkills AiSkill { get; protected set; }
+        [SerializeField] protected AILook aiLook;
         [SerializeField] public Health health;
         [SerializeField] protected NavMeshAgent agent;
         [SerializeField] protected TargetDetector targetDetector;
         [SerializeField] public Vector3 startPoint;
         [SerializeField] protected float activeRadius = 10f;
-        public int SkillHash => aiSkill.ReadySkill.Hash;
-        public string SkillName => aiSkill.ReadySkill.Name;
 
         protected virtual void Awake()
         {
@@ -29,11 +28,10 @@ namespace Project3D
             ai = GetComponent<AIController>();
             health = GetComponent<Health>();
             targetDetector = GetComponent<TargetDetector>();
-            aiSkill = GetComponent<AISkills>();
+            AiSkill = GetComponent<AISkills>();
+            aiLook = GetComponent<AILook>();
         }
 
         protected AIState GetCurrentState() => (AIState)currentState;
-
-        public virtual void UseSkill() => aiSkill.Activate(agent);
     }
 }

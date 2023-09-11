@@ -9,6 +9,7 @@ namespace Project3D
     public class AISkills : MyMonoBehaviour
     {
         [SerializeField] protected TargetDetector targetDetector;
+        [SerializeField] protected AILook aiLook;
 
         protected List<Skill> skillList;
         [SerializeField] protected float coolDownTime = 5f;
@@ -33,13 +34,14 @@ namespace Project3D
             base.LoadComponent();
 
             targetDetector = GetComponent<TargetDetector>();
+            aiLook = GetComponent<AILook>();
         }
 
         protected void Awake() => Initialize();
 
         protected virtual void Initialize()
         {
-            skillList.ForEach(skill=> skill.Init(targetDetector));
+            skillList.ForEach(skill => skill.Init(targetDetector, aiLook));
             CanAttack = true;
             cooldown = new WaitForSeconds(coolDownTime);
             ChooseSkill();
@@ -48,12 +50,16 @@ namespace Project3D
         public void Activate(NavMeshAgent agent)
         {
             ReadySkill.Activate(agent);
+            CanAttack = false;
+        }
+
+        public void CoolDown()
+        {
             StartCoroutine(Cooldown());
         }
 
         private IEnumerator Cooldown()
         {
-            CanAttack = false;
             yield return cooldown;
             CanAttack = true;
         }

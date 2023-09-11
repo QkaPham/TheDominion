@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.Animations.Rigging;
 
 namespace Project3D
 {
@@ -10,13 +9,7 @@ namespace Project3D
         [SerializeField] private float angle = 180;
         [SerializeField] private int maxDetectNumber = 1;
         [SerializeField] private float radius = 3;
-        [SerializeField] private Transform lookAtPoint;
-        [SerializeField] private Rig lookAtRig;
-        [SerializeField] private float lookSmoothTime = 0.1f;
         [SerializeField] private LayerMask groundLayer = 1 << 0 | 1 << 3;
-        [SerializeField] private float lookSpeed;
-
-        public bool Look { get; set; } = true;
 
         private Collider[] targets;
         [field: SerializeField] public Transform Target { get; private set; }
@@ -48,11 +41,6 @@ namespace Project3D
         {
             maxDetectNumber = Mathf.Max(1, maxDetectNumber);
             targets = new Collider[maxDetectNumber];
-        }
-
-        private void Update()
-        {
-            LookAtTarget();
         }
 
         public bool HasTarget() => Target != null;
@@ -88,21 +76,6 @@ namespace Project3D
             }
 
             Target = targets[0].transform.root.GetComponent<PlayerController>().TargetPoint;
-        }
-
-        private void LookAtTarget()
-        {
-            if (HasTarget() && Look)
-            {
-                if (lookAtRig.weight < 1)
-                    lookAtRig.weight = Mathf.MoveTowards(lookAtRig.weight, 1, lookSmoothTime);
-                lookAtPoint.position = Vector3.MoveTowards(lookAtPoint.position, Target.position, lookSpeed * Time.deltaTime);
-            }
-            else
-            {
-                if (lookAtRig.weight > 0)
-                    lookAtRig.weight = Mathf.MoveTowards(lookAtRig.weight, 0, lookSmoothTime);
-            }
         }
     }
 }

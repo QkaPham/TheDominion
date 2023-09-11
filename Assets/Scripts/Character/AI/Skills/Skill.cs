@@ -15,11 +15,13 @@ namespace Project3D
         public virtual bool CanUse { get; protected set; } = true;
 
         protected TargetDetector targetDetector;
+        protected AILook aiLook;
 
-        public void Init(TargetDetector targetDetector)
+        public void Init(TargetDetector targetDetector, AILook ailook)
         {
             Hash = Animator.StringToHash(Name);
             this.targetDetector = targetDetector;
+            this.aiLook = ailook;
         }
 
         public virtual void Activate(NavMeshAgent agent) { }

@@ -17,6 +17,7 @@ namespace Project3D
 
             agent.stoppingDistance = stopDistance;
             agent.enabled = false;
+            aiLook.Stop();
         }
     }
 }

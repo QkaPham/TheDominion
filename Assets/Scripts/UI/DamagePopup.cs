@@ -8,20 +8,18 @@ namespace Project3D
         [SerializeField] private float lifeTime = 2f;
         [SerializeField] private TMP_Text damageText;
 
-        [SerializeField] private Vector2 initialVelocity;
-        [SerializeField] private float acceleration;
+        [SerializeField] private Vector3 velocity = Vector3.up;
+        [SerializeField] private AnimationCurve alpha;
+        [SerializeField] private AnimationCurve size;
 
-        private Vector3 velocity = Vector3.zero;
-
-        private void Start()
-        {
-            velocity = initialVelocity.y * transform.up + Random.Range(-initialVelocity.x, initialVelocity.x) * transform.right;
-        }
+        private float process;
 
         private void Update()
         {
-            velocity.y += Time.deltaTime * acceleration;
+            process = Mathf.MoveTowards(process, 1, Time.deltaTime / lifeTime);
             transform.localPosition += Time.deltaTime * velocity;
+            damageText.alpha = alpha.Evaluate(process);
+            transform.localScale = size.Evaluate(process) * Vector3.one;
         }
 
         public void Initialize(float damage)

@@ -19,40 +19,40 @@ namespace Project3D
         {
             base.Awake();
 
-            idle.Initialize(animator, ai, agent, targetDetector, this);
-            chase.Initialize(animator, ai, agent, targetDetector, this);
-            attack.Initialize(animator, ai, agent, targetDetector, this);
-            strafeForward.Initialize(animator, ai, agent, targetDetector, this);
-            strafeBackward.Initialize(animator, ai, agent, targetDetector, this);
-            findAttacker.Initialize(animator, ai, agent, targetDetector, this);
-            giveUp.Initialize(animator, ai, agent, targetDetector, this);
-            hurt.Initialize(animator, ai, agent, targetDetector, this);
-            defeat.Initialize(animator, ai, agent, targetDetector, this);
+            idle.Initialize(animator, ai, agent, targetDetector, aiLook, this);
+            chase.Initialize(animator, ai, agent, targetDetector, aiLook, this);
+            attack.Initialize(animator, ai, agent, targetDetector, aiLook, this);
+            strafeForward.Initialize(animator, ai, agent, targetDetector, aiLook, this);
+            strafeBackward.Initialize(animator, ai, agent, targetDetector, aiLook, this);
+            findAttacker.Initialize(animator, ai, agent, targetDetector, aiLook, this);
+            giveUp.Initialize(animator, ai, agent, targetDetector, aiLook, this);
+            hurt.Initialize(animator, ai, agent, targetDetector, aiLook, this);
+            defeat.Initialize(animator, ai, agent, targetDetector, aiLook, this);
 
-            AddTransition(idle, chase, () => targetDetector.HasTarget() && aiSkill.CanAttack);
-            AddTransition(idle, strafeForward, () => targetDetector.HasTarget() && !aiSkill.CanAttack);
+            AddTransition(idle, chase, () => targetDetector.HasTarget() && AiSkill.CanAttack);
+            AddTransition(idle, strafeForward, () => targetDetector.HasTarget() && !AiSkill.CanAttack);
 
-            AddTransition(chase, attack, () => targetDetector.DistanceToDestination <= aiSkill.SkillRange);
+            AddTransition(chase, attack, () => targetDetector.DistanceToDestination <= AiSkill.SkillRange);
             AddTransition(chase, idle, () => !targetDetector.HasTarget());
 
             AddTransition(attack, strafeBackward, () => GetCurrentState().HasTransitionRequest() && targetDetector.HasTarget());
             AddTransition(attack, idle, () => GetCurrentState().HasTransitionRequest() && !targetDetector.HasTarget());
 
             AddTransition(strafeForward, idle, () => !targetDetector.HasTarget());
-            AddTransition(strafeForward, chase, () => aiSkill.CanAttack);
+            AddTransition(strafeForward, chase, () => AiSkill.CanAttack);
 
-            AddTransition(strafeBackward, chase, () => aiSkill.CanAttack);
-            AddTransition(strafeBackward, strafeForward, () => !aiSkill.CanAttack && GetCurrentState().HasTransitionRequest());
+            AddTransition(strafeBackward, chase, () => AiSkill.CanAttack);
+            AddTransition(strafeBackward, strafeForward, () => !AiSkill.CanAttack && GetCurrentState().HasTransitionRequest());
 
-            AddTransition(findAttacker, chase, () => targetDetector.HasTarget() && aiSkill.CanAttack);
+            AddTransition(findAttacker, chase, () => targetDetector.HasTarget() && AiSkill.CanAttack);
             AddTransition(findAttacker, idle, () => findAttacker.TimeOut);
-            AddTransition(findAttacker, strafeBackward, () => targetDetector.HasTarget() && !aiSkill.CanAttack);
+            AddTransition(findAttacker, strafeBackward, () => targetDetector.HasTarget() && !AiSkill.CanAttack);
 
             AddTransition(giveUp, idle, () => Vector3.Distance(transform.position, startPoint) < 0.1f);
 
             AddTransition(hurt, findAttacker, () => GetCurrentState().HasTransitionRequest() && !targetDetector.HasTarget());
-            AddTransition(hurt, strafeBackward, () => GetCurrentState().HasTransitionRequest() && targetDetector.HasTarget() && !aiSkill.CanAttack);
-            AddTransition(hurt, chase, () => GetCurrentState().HasTransitionRequest() && targetDetector.HasTarget() && aiSkill.CanAttack);
+            AddTransition(hurt, strafeBackward, () => GetCurrentState().HasTransitionRequest() && targetDetector.HasTarget() && !AiSkill.CanAttack);
+            AddTransition(hurt, chase, () => GetCurrentState().HasTransitionRequest() && targetDetector.HasTarget() && AiSkill.CanAttack);
 
             AddTransitionFromAny(giveUp, GiveUpCondition);
 

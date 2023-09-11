@@ -6,7 +6,7 @@ namespace Project3D
     {
         protected override void OnClick()
         {
-            Debug.Log("Exit Application");
+            Application.Quit();
         }
     }
 }

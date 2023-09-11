@@ -25,6 +25,8 @@ namespace Project3D
             base.LogicUpdate();
 
             agent.SetDestination(stateMachine.startPoint);
+
+            stateMachine.health.HealFull();
         }
     }
 }

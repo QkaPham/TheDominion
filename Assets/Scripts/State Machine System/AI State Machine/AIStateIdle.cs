@@ -14,7 +14,7 @@ namespace Project3D
             base.Enter();
 
             agent.enabled = false;
-            stateMachine.health.HealFull();
+           // stateMachine.health.HealFull();
         }
 
         public override void Exit()

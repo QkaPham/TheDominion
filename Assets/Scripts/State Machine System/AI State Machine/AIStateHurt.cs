@@ -17,7 +17,7 @@ namespace Project3D
         {
             base.Enter();
 
-            targetDetector.Look = false;
+            aiLook.Stop();
             agent.enabled = false;
         }
 
@@ -25,7 +25,7 @@ namespace Project3D
         {
             base.Exit();
 
-            targetDetector.Look = true;
+            aiLook.LockOn();
             agent.enabled = true;
         }
     }
