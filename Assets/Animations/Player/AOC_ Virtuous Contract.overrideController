@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!221 &22100000
+AnimatorOverrideController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: AOC_ Virtuous Contract
+  m_Controller: {fileID: 9100000, guid: c705ecea5d160694ca21784206a3a3b5, type: 2}
+  m_Clips:
+  - m_OriginalClip: {fileID: 7400000, guid: 7ceed46d3ef7acc49b212c2659caffb0, type: 2}
+    m_OverrideClip: {fileID: -7104751413270520068, guid: 43413615faf724642a2285f2fd941a29,
+      type: 3}
+  - m_OriginalClip: {fileID: 7400000, guid: 93d751289a148224c918e746514d4aa3, type: 2}
+    m_OverrideClip: {fileID: 6414041789229090550, guid: aa73cd9e8854ed84e91fb687e58e3493,
+      type: 3}
+  - m_OriginalClip: {fileID: 7400000, guid: ef29aa052cd119e4e8bf9e409e2fa311, type: 2}
+    m_OverrideClip: {fileID: 1783934442285094450, guid: 2bea93c5ecbe3fb43a8baa68e3ef0cb5,
+      type: 3}

@@ -11,7 +11,7 @@ namespace Project3D
 
         [SerializeField] private float dashTime = 0.2f;
         [SerializeField] private float dashDistance = 1f;
-        public bool IsDashFinished => StateDuration > dashTime;
+        public override bool HasRequestTransition() => StateDuration > dashTime;
 
         public override void Enter()
         {

@@ -8,11 +8,13 @@ namespace Project3D
         public string Content => "Rest";
 
         public static event Action InteractEvent;
+        public static CheckPoint lastInteractCheckPoint;
 
         public void Interact(PlayerController player)
         {
             player.GetComponent<Potion>().Refill();
             player.GetComponent<Health>().HealFull();
+            lastInteractCheckPoint = this;
             InteractEvent?.Invoke();
         }
     }

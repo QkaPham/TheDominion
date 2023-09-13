@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 namespace Project3D
@@ -7,17 +8,24 @@ namespace Project3D
     {
         public string WeaponName;
 
-        public GameObject Model;
+        public WeaponModel[] WeaponModels;
 
         public Transform HitBoxsPrefab;
-        
+
         public AnimatorOverrideController AnimatorOverride;
-        
+
         public int HitNumber;
-        
+
         public float DamageMultiplier;
-        
+
         public WeaponHanding Handing;
+    }
+
+    [Serializable]
+    public class WeaponModel
+    {
+        public GameObject GaneObject;
+        public WeaponPosition Position;
     }
 
     public enum WeaponHanding

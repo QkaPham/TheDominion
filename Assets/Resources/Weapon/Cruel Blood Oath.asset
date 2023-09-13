@@ -13,10 +13,16 @@ MonoBehaviour:
   m_Name: Cruel Blood Oath
   m_EditorClassIdentifier: 
   WeaponName: Cruel Blood Oath
-  Model: {fileID: 8183066955010809955, guid: 93f8e65c092519840b3a9cc48a05c879, type: 3}
+  WeaponModels:
+  - GaneObject: {fileID: 8183066955010809955, guid: 93f8e65c092519840b3a9cc48a05c879,
+      type: 3}
+    Position: 1
+  - GaneObject: {fileID: 8183066955010809955, guid: 93f8e65c092519840b3a9cc48a05c879,
+      type: 3}
+    Position: 2
   HitBoxsPrefab: {fileID: 303590331752591291, guid: 72e609d20d689834a830641c27da9655,
     type: 3}
   AnimatorOverride: {fileID: 22100000, guid: b875e9e3c1b670543897a02d63d4a399, type: 2}
-  HitNumber: 3
+  HitNumber: 5
   DamageMultiplier: 1.2
   Handing: 0

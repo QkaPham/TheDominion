@@ -23,14 +23,16 @@ namespace Project3D
             currentState.LogicUpdate();
         }
 
+        public PlayerState GetCurrentState() => (PlayerState)currentState;
+
         protected void SwitchOn(IState newState)
         {
             currentState = newState;
             transitions.TryGetValue(currentState, out currentTransitions);
 
-            if (currentTransitions == null)       
+            if (currentTransitions == null)
                 currentTransitions = EmptyTransisions;
-            
+
             currentState.Enter();
         }
 

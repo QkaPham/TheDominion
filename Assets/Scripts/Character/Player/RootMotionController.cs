@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.InputSystem.XR;
 
 namespace Project3D
 {
@@ -24,7 +25,7 @@ namespace Project3D
                 {
                     controller.Move(animator.deltaPosition);
                 }
-                transform.root.rotation *= animator.deltaRotation;
+                controller.transform.rotation *= animator.deltaRotation;
             }
         }
 

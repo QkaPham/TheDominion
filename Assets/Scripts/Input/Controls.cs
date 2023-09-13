@@ -109,6 +109,24 @@ namespace Project3D
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""RotateCamera"",
+                    ""type"": ""Value"",
+                    ""id"": ""7dc36bb7-f08b-482e-9b80-617109a724ca"",
+                    ""expectedControlType"": ""Axis"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""ZoomCamera"",
+                    ""type"": ""Value"",
+                    ""id"": ""274778dd-e665-4504-8c79-f37380ce0b70"",
+                    ""expectedControlType"": ""Axis"",
+                    ""processors"": ""Clamp(min=-1,max=1)"",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
                 }
             ],
             ""bindings"": [
@@ -324,7 +342,7 @@ namespace Project3D
                 {
                     ""name"": """",
                     ""id"": ""ea66e663-bf25-436d-87ab-3b5e6f380cd9"",
-                    ""path"": ""<Keyboard>/r"",
+                    ""path"": ""<Mouse>/leftButton"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -408,6 +426,72 @@ namespace Project3D
                     ""action"": ""Command"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""ZX"",
+                    ""id"": ""059ec6e5-cb56-4691-9773-22705399dcc5"",
+                    ""path"": ""1DAxis"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""RotateCamera"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""negative"",
+                    ""id"": ""a4d98b60-bfe4-42bf-bc17-7a229f6367dd"",
+                    ""path"": ""<Keyboard>/z"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""RotateCamera"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""positive"",
+                    ""id"": ""2d9266f4-49c7-47d8-99c8-a1121d509aa8"",
+                    ""path"": ""<Keyboard>/x"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""RotateCamera"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""Mouse Scroll"",
+                    ""id"": ""1aad2862-e19d-4d16-858a-74ae311ff68a"",
+                    ""path"": ""1DAxis"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ZoomCamera"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""negative"",
+                    ""id"": ""e5a92710-f62c-4f5e-9155-960f9fdd6597"",
+                    ""path"": ""<Mouse>/scroll/down"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ZoomCamera"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""positive"",
+                    ""id"": ""051546e9-590e-4ecb-a993-ab31631ad995"",
+                    ""path"": ""<Mouse>/scroll/up"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ZoomCamera"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
                 }
             ]
         },
@@ -941,6 +1025,8 @@ namespace Project3D
             m_Player_Pause = m_Player.FindAction("Pause", throwIfNotFound: true);
             m_Player_UsePotion = m_Player.FindAction("UsePotion", throwIfNotFound: true);
             m_Player_Command = m_Player.FindAction("Command", throwIfNotFound: true);
+            m_Player_RotateCamera = m_Player.FindAction("RotateCamera", throwIfNotFound: true);
+            m_Player_ZoomCamera = m_Player.FindAction("ZoomCamera", throwIfNotFound: true);
             // UI
             m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
             m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -1023,6 +1109,8 @@ namespace Project3D
         private readonly InputAction m_Player_Pause;
         private readonly InputAction m_Player_UsePotion;
         private readonly InputAction m_Player_Command;
+        private readonly InputAction m_Player_RotateCamera;
+        private readonly InputAction m_Player_ZoomCamera;
         public struct PlayerActions
         {
             private @Controls m_Wrapper;
@@ -1036,6 +1124,8 @@ namespace Project3D
             public InputAction @Pause => m_Wrapper.m_Player_Pause;
             public InputAction @UsePotion => m_Wrapper.m_Player_UsePotion;
             public InputAction @Command => m_Wrapper.m_Player_Command;
+            public InputAction @RotateCamera => m_Wrapper.m_Player_RotateCamera;
+            public InputAction @ZoomCamera => m_Wrapper.m_Player_ZoomCamera;
             public InputActionMap Get() { return m_Wrapper.m_Player; }
             public void Enable() { Get().Enable(); }
             public void Disable() { Get().Disable(); }
@@ -1072,6 +1162,12 @@ namespace Project3D
                 @Command.started += instance.OnCommand;
                 @Command.performed += instance.OnCommand;
                 @Command.canceled += instance.OnCommand;
+                @RotateCamera.started += instance.OnRotateCamera;
+                @RotateCamera.performed += instance.OnRotateCamera;
+                @RotateCamera.canceled += instance.OnRotateCamera;
+                @ZoomCamera.started += instance.OnZoomCamera;
+                @ZoomCamera.performed += instance.OnZoomCamera;
+                @ZoomCamera.canceled += instance.OnZoomCamera;
             }
 
             private void UnregisterCallbacks(IPlayerActions instance)
@@ -1103,6 +1199,12 @@ namespace Project3D
                 @Command.started -= instance.OnCommand;
                 @Command.performed -= instance.OnCommand;
                 @Command.canceled -= instance.OnCommand;
+                @RotateCamera.started -= instance.OnRotateCamera;
+                @RotateCamera.performed -= instance.OnRotateCamera;
+                @RotateCamera.canceled -= instance.OnRotateCamera;
+                @ZoomCamera.started -= instance.OnZoomCamera;
+                @ZoomCamera.performed -= instance.OnZoomCamera;
+                @ZoomCamera.canceled -= instance.OnZoomCamera;
             }
 
             public void RemoveCallbacks(IPlayerActions instance)
@@ -1249,6 +1351,8 @@ namespace Project3D
             void OnPause(InputAction.CallbackContext context);
             void OnUsePotion(InputAction.CallbackContext context);
             void OnCommand(InputAction.CallbackContext context);
+            void OnRotateCamera(InputAction.CallbackContext context);
+            void OnZoomCamera(InputAction.CallbackContext context);
         }
         public interface IUIActions
         {

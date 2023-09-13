@@ -14,6 +14,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   WeaponName: Virtuous Contract
   Model: {fileID: 8183066955010809955, guid: c8be72ea66db0cf4d9e80552ad5f0ae6, type: 3}
+  ModelLeftHand: {fileID: 0}
+  ModelBackPose: {fileID: 0}
+  WeaponModels:
+  - GaneObject: {fileID: 8183066955010809955, guid: c8be72ea66db0cf4d9e80552ad5f0ae6,
+      type: 3}
+    Position: 1
+  - GaneObject: {fileID: 8183066955010809955, guid: c8be72ea66db0cf4d9e80552ad5f0ae6,
+      type: 3}
+    Position: 2
   HitBoxsPrefab: {fileID: 303590331752591291, guid: 4bed5ac220a522c4f94e6b7723ef44c2,
     type: 3}
   AnimatorOverride: {fileID: 22100000, guid: e184523314dd8874988898bab7149257, type: 2}

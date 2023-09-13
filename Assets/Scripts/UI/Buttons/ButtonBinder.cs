@@ -13,9 +13,9 @@ namespace Project3D
             button = GetComponent<Button>();
         }
 
-        private void Start() => button.onClick.AddListener(OnClick);
+        private void OnEnable() => button.onClick.AddListener(OnClick);
+        private void OnDisable() => button.onClick.RemoveListener(OnClick);
 
-        private void OnDestroy() => button.onClick.RemoveListener(OnClick);
         protected abstract void OnClick();
     }
 }

@@ -12,6 +12,10 @@ namespace Project3D
         [SerializeField] float stiffTime = 0.2f;
         public bool IsLandFinished => StateDuration < stiffTime;
         public bool IsOnSteepSlope => player.OnSteepSlope(out _);
+        public override bool HasRequestTransition()
+        {
+            return animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.99f && animator.GetCurrentAnimatorStateInfo(0).IsName(StateName) && !animator.IsInTransition(0);
+        }
 
         public override void Enter()
         {

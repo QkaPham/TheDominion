@@ -1,6 +1,8 @@
 using Cinemachine;
+using System;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.InputSystem;
 
 namespace Project3D
 {
@@ -39,8 +41,6 @@ namespace Project3D
                 lastJumpInputTime = Time.time;
             }
         }
-
-
         public bool Attack => Controls.Player.Attack.WasPressedThisFrame();
 
         [SerializeField] private float attackBufferTime;
@@ -61,10 +61,11 @@ namespace Project3D
         public bool Pause => Controls.Player.Pause.WasPressedThisFrame();
         public bool Dash => Controls.Player.Dash.WasPressedThisFrame();
         public bool UsePotion => Controls.Player.UsePotion.WasPressedThisFrame();
-
         public bool Command => Controls.Player.Command.WasPressedThisFrame();
 
         public bool Cancel => Controls.UI.Cancel.WasPressedThisFrame();
+
+        public event Action<float> RotateCamera, ZoomCamera;
 
         private void Awake()
         {
@@ -80,7 +81,25 @@ namespace Project3D
 
         private void OnEnable()
         {
+            Controls.Player.RotateCamera.performed += OnRotateCamera;
+            Controls.Player.ZoomCamera.performed += OnZoomCamera;
             Controls.Player.Jump.canceled += ctx => HasJumpBuffer = false;
+        }
+
+        private void OnDisable()
+        {
+            Controls.Player.RotateCamera.performed -= OnRotateCamera;
+            Controls.Player.ZoomCamera.performed -= OnZoomCamera;
+        }
+
+        private void OnRotateCamera(InputAction.CallbackContext ctx)
+        {
+            RotateCamera?.Invoke(ctx.ReadValue<float>());
+        }
+
+        private void OnZoomCamera(InputAction.CallbackContext ctx)
+        {
+            ZoomCamera?.Invoke(ctx.ReadValue<float>());
         }
 
         public void SwitchControls(ControlsID id)

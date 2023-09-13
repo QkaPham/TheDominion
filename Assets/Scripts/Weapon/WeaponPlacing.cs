@@ -1,4 +1,6 @@
+using System.Linq;
 using UnityEngine;
+using static UnityEditor.FilePathAttribute;
 
 namespace Project3D
 {
@@ -29,17 +31,36 @@ namespace Project3D
             foreach (WeaponPositionMark weaponPlace in weaponPosition)
             {
                 weaponPlace.Unequip();
-                weaponPlace.Initialize(weaponSO.Model);
+                var model = weaponSO.WeaponModels.FirstOrDefault(model => model.Position == weaponPlace.Position);
+                if (model != null)
+                {
+                    weaponPlace.Initialize(model.GaneObject);
+                }
             }
 
-            LoadWeapon(WeaponPosition.Back);
+            LoadWeaponToBack();
         }
 
-        public void LoadWeapon(WeaponPosition location)
+        public void LoadWeaponToHand()
         {
             foreach (WeaponPositionMark holder in weaponPosition)
             {
-                if (holder.Location == location)
+                if (holder.Position == WeaponPosition.Back)
+                {
+                    holder.Unload();
+                }
+                else
+                {
+                    holder.Load();
+                }
+            }
+        }
+
+        public void LoadWeaponToBack()
+        {
+            foreach (WeaponPositionMark holder in weaponPosition)
+            {
+                if (holder.Position == WeaponPosition.Back)
                 {
                     holder.Load();
                 }

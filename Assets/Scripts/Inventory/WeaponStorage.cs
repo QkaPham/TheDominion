@@ -6,7 +6,7 @@ namespace Project3D
 {
     public class WeaponStorage : MonoBehaviour
     {
-        [SerializeField] private List<WeaponSO> ownedWeapons = new List<WeaponSO>();
+        public List<WeaponSO> ownedWeapons;
 
         public event Action<WeaponSO> NewWeaponAdd;
 

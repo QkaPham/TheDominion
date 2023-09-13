@@ -8,12 +8,11 @@ namespace Project3D
         LeftHand,
         RightHand,
         Back,
-        //Mouth
     }
 
     public class WeaponPositionMark : MyMonoBehaviour
     {
-        [field: SerializeField] public WeaponPosition Location { get; private set; }
+        [field: SerializeField] public WeaponPosition Position { get; private set; }
         private GameObject weapon;
 
         public void Initialize(GameObject weaponPrefab)
@@ -23,9 +22,17 @@ namespace Project3D
             Unload();
         }
 
-        public void Load() => weapon.SetActive(true);
+        public void Load()
+        {
+            if (weapon == null) return;
+            weapon.SetActive(true);
+        }
 
-        public void Unload() => weapon.SetActive(false);
+        public void Unload()
+        {
+            if (weapon == null) return;
+            weapon.SetActive(false);
+        }
 
         public void Unequip() => Destroy(weapon);
     }

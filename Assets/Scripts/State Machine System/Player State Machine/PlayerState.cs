@@ -18,7 +18,8 @@ namespace Project3D
         protected PlayerInput input;
         protected PlayerAnimationEvent animationEvent;
 
-        protected bool IsAnimationFinished => animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.99f;
+        public virtual bool HasRequestTransition() => false;
+        public bool IsAnimationFinished => animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.99f && animator.GetCurrentAnimatorStateInfo(0).IsName(StateName) && !animator.IsInTransition(0);
         protected float StateDuration => Time.time - stateStartTime;
 
         public virtual void Initialize(Animator animator, PlayerController player, PlayerInput input, PlayerAnimationEvent animationEvent, PlayerStateMachine stateMachine)

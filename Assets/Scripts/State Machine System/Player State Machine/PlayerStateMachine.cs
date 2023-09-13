@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 using System;
+using System.Security.Cryptography.X509Certificates;
 
 namespace Project3D
 {
@@ -29,10 +30,12 @@ namespace Project3D
         [SerializeField] private PlayerStateJump jump = new();
         [SerializeField] private PlayerStateFall fall = new();
         [SerializeField] private PlayerStateSlide slide = new();
-        [SerializeField] private PlayerStateDash dash = new();
+        //erializeField] private PlayerStateDash roll= new();
+        [SerializeField] private PlayerStateRoll roll = new();
         [SerializeField] private PlayerStateAirJump airJump = new();
         [SerializeField] private PlayerStateLand land = new();
-        [SerializeField] private PlayerStateAttack attack = new();
+        //[SerializeField] private PlayerStateAttack attack = new();
+        [SerializeField] private PlayerStateAttackSeperate attack = new();
         [SerializeField] private PlayerStateDefeat defeat = new();
 
         private void Awake()
@@ -43,7 +46,7 @@ namespace Project3D
             fall.Initialize(animator, player, input, animationEvent, this);
             slide.Initialize(animator, player, input, animationEvent, this);
             attack.Initialize(animator, player, input, animationEvent, this);
-            dash.Initialize(animator, player, input, animationEvent, this);
+            roll.Initialize(animator, player, input, animationEvent, this);
             airJump.Initialize(animator, player, input, animationEvent, this);
             land.Initialize(animator, player, input, animationEvent, this);
             defeat.Initialize(animator, player, input, animationEvent, this);
@@ -52,15 +55,15 @@ namespace Project3D
             AddTransition(idle, jump, () => input.Jump);
             AddTransition(idle, fall, () => !player.IsGrounded);
             AddTransition(idle, slide, () => idle.IsOnSteepSlope);
-            AddTransition(idle, attack, () => input.Attack);
-            AddTransition(idle, dash, () => input.Dash);
+            AddTransition(idle, attack, () => input.Attack && !animator.IsInTransition(0));
+            AddTransition(idle, roll, () => input.Dash);
 
             AddTransition(run, idle, () => !input.Move);
             AddTransition(run, jump, () => input.Jump);
             AddTransition(run, fall, () => !player.IsGrounded);
             AddTransition(run, slide, () => run.IsOnSteepSlope);
             AddTransition(run, attack, () => input.Attack);
-            AddTransition(run, dash, () => input.Dash);
+            AddTransition(run, roll, () => input.Dash);
 
             AddTransition(jump, fall, () => player.IsFalling);
             AddTransition(jump, land, () => jump.IsUngrounded && player.IsGrounded);
@@ -71,17 +74,17 @@ namespace Project3D
 
             AddTransition(slide, idle, () => !slide.IsOnSteepSlope);
 
-            AddTransition(attack, idle, () => IsAnimationFinished);
+            AddTransition(attack, idle, () => GetCurrentState().HasRequestTransition());
             AddTransition(attack, run, () => attack.IsAttackFinished && !(input.Attack || input.HasAttackBuffer) && input.Move);
-            AddTransition(attack, dash, () => attack.IsAttackFinished && !(input.Attack || input.HasAttackBuffer) && input.Dash);
+            AddTransition(attack, roll, () => attack.IsAttackFinished && !(input.Attack || input.HasAttackBuffer) && input.Dash);
 
-            AddTransition(dash, idle, () => dash.IsDashFinished);
+            AddTransition(roll, idle, () => GetCurrentState().HasRequestTransition());
 
             AddTransition(airJump, fall, () => player.IsFalling);
             AddTransition(airJump, land, () => player.IsGrounded);
 
             AddTransition(land, run, () => land.IsLandFinished && input.Move);
-            AddTransition(land, idle, () => IsAnimationFinished);
+            AddTransition(land, idle, () => GetCurrentState().HasRequestTransition());
             AddTransition(land, slide, () => player.OnSteepSlope(out _));
             AddTransition(land, jump, () => input.HasJumpBuffer || input.Jump);
 
@@ -91,6 +94,12 @@ namespace Project3D
         private void Start()
         {
             SwitchOn(idle);
+        }
+
+        public void Revive()
+        {
+            SwitchState(idle);
+            health.HealFull();
         }
     }
 }
