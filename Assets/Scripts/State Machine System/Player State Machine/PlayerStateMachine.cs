@@ -96,10 +96,11 @@ namespace Project3D
             SwitchOn(idle);
         }
 
-        public void Revive()
+        public void Revive(Vector3 position)
         {
             SwitchState(idle);
             health.HealFull();
+            player.Teleport(position);
         }
     }
 }

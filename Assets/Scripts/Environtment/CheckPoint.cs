@@ -1,4 +1,5 @@
 using System;
+using UnityEngine;
 
 namespace Project3D
 {
@@ -9,6 +10,12 @@ namespace Project3D
 
         public static event Action InteractEvent;
         public static CheckPoint lastInteractCheckPoint;
+        [field: SerializeField] public Transform RevivePoint { get; private set; }
+
+        private void Awake()
+        {
+            lastInteractCheckPoint = this;
+        }
 
         public void Interact(PlayerController player)
         {

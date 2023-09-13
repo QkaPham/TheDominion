@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using UnityEngine;
 
 namespace Project3D
@@ -9,14 +10,21 @@ namespace Project3D
         [field: SerializeField] protected override string StateName { get; set; } = "Defeat";
         [field: SerializeField] protected override float TransitionDuration { get; set;  } = 0f;
 
-        public override void LogicUpdate()
-        {
-            base.LogicUpdate();
 
-            if (IsAnimationFinished)
+        public override void Enter()
+        {
+            base.Enter();
+
+            player.StartCoroutine(Death());
+        }
+
+        private IEnumerator Death()
+        {
+            while (!IsAnimationFinished)
             {
-                player.Death();
+                yield return null;
             }
+            player.Death();
         }
     }
 }

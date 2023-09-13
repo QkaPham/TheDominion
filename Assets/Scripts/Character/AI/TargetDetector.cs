@@ -12,8 +12,27 @@ namespace Project3D
         [SerializeField] private LayerMask groundLayer = 1 << 0 | 1 << 3;
 
         private Collider[] targets;
-        [field: SerializeField] public Transform Target { get; private set; }
-        public Vector3 TargetDirection => Target.position - transform.position;
+
+        private Transform target;
+        public Transform Target
+        {
+            get => target;
+            set
+            {
+                target = value;
+                targetHealth = target == null ? null : target.root.GetComponent<PlayerHealth>();
+            }
+        }
+
+        [field: SerializeField] public PlayerHealth targetHealth { get; private set; }
+        public Vector3 TargetDirection
+        {
+            get
+            {
+                var result = Target.position - transform.position;
+                return result == Vector3.zero ? transform.forward : result;
+            }
+        }
 
         public float DistanceToTarget
         {
@@ -43,7 +62,7 @@ namespace Project3D
             targets = new Collider[maxDetectNumber];
         }
 
-        public bool HasTarget() => Target != null;
+        public bool HasTarget() => Target != null && !targetHealth.IsDead;
 
         public void GiveUp() => Target = null;
 
