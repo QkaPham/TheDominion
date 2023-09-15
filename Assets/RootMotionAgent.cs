@@ -9,20 +9,35 @@ namespace Project3D
     {
         [SerializeField] private Animator animator;
         [SerializeField] private NavMeshAgent agent;
-        public bool Apply { get; set; } = true;
+
+        private bool apply = false;
+        public bool Apply
+        {
+            get => apply;
+            set
+            {
+                apply = value;
+                agent.enabled = apply;
+                agent.updatePosition = !apply;
+                agent.updateRotation = !apply;
+            }
+        }
 
         public override void LoadComponent()
         {
             base.LoadComponent();
             animator = GetComponent<Animator>();
+            agent = GetComponentInParent<NavMeshAgent>();
         }
 
         private void OnAnimatorMove()
         {
             if (Apply)
             {
-                agent.enabled = true;
-                agent.Move(animator.deltaPosition);
+                Vector3 position = animator.rootPosition;
+                position.y = agent.nextPosition.y;
+                agent.transform.position = position;
+                agent.nextPosition = transform.position;
                 agent.transform.rotation *= animator.deltaRotation;
             }
         }

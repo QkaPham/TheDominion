@@ -1,16 +1,29 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 namespace Project3D
 {
     public class Test : MonoBehaviour
     {
-        public Vector2 pos;
+        public bool bite;
 
-        private void Reset()
+        public Animator animator;
+
+
+
+        private void Update()
         {
-            pos = Camera.main.WorldToScreenPoint(transform.position);
+            if (Keyboard.current.iKey.wasPressedThisFrame)
+            {
+                Bite();
+            }
+        }
+
+        private void Bite()
+        {
+            animator.SetTrigger("Bite");
         }
     }
 }

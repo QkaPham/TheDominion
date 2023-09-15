@@ -66,6 +66,13 @@ namespace Project3D
 
         public void GiveUp() => Target = null;
 
+        public float SignedAngleToTarget()
+        {
+            var direction = TargetDirection;
+            direction.y = 0;
+            return Vector3.SignedAngle(transform.forward, direction, transform.up);
+        }
+
         public void GetTargetForward()
         {
             System.Array.Clear(targets, 0, maxDetectNumber);

@@ -31,13 +31,5 @@ namespace Project3D
         {
             uiManager.Show(typeof(WinView));
         }
-
-        public void EnterBossBattle(GameObject boss)
-        {
-            //Change Music
-            //Change Camera
-            //Play Cutscene
-            health = boss.GetComponentInChildren<Health>();
-        }
     }
 }

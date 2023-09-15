@@ -5,7 +5,7 @@ using UnityEngine;
 namespace Project3D
 {
     [Serializable]
-    public class PlayerStateDefeat : PlayerState
+    public class PlayerStateEnterBossRoom : PlayerState
     {
         [field: SerializeField] protected override string StateName { get; set; } = "Defeat";
         [field: SerializeField] protected override float TransitionDuration { get; set;  } = 0f;

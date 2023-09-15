@@ -7,8 +7,9 @@ namespace Project3D
     public class Dragon : AIStateMachine
     {
         [SerializeField] private AIStateIdle idle;
-        [SerializeField] private AIStateChase chase;
+        //[SerializeField] private AIStateChase chase;
         [SerializeField] private AIStateAttack attack;
+        [SerializeField] private AIStateRotateToTarget chase;
         [SerializeField] private AIStateHurt hurt;
         [SerializeField] private AIStateDefeat defeat;
 
@@ -24,9 +25,13 @@ namespace Project3D
 
             AddTransition(idle, chase, () => targetDetector.HasTarget() && AiSkill.CanAttack);
 
-            AddTransition(chase, attack, () => targetDetector.DistanceToDestination <= AiSkill.SkillRange);
+
+            AddTransition(chase, attack, () => GetCurrentState().HasTransitionRequest() && targetDetector.DistanceToDestination <= AiSkill.SkillRange );
+           // AddTransition(chase, rotate, () => targetDetector.DistanceToDestination <= AiSkill.SkillRange);
             AddTransition(chase, idle, () => !targetDetector.HasTarget());
             AddTransition(attack, idle, () => GetCurrentState().HasTransitionRequest());
+
+            //AddTransition(rotate, attack, () => GetCurrentState().HasTransitionRequest());
 
             AddTransition(hurt, idle, () => GetCurrentState().HasTransitionRequest() && targetDetector.HasTarget() && !AiSkill.CanAttack);
             AddTransition(hurt, chase, () => GetCurrentState().HasTransitionRequest() && targetDetector.HasTarget() && AiSkill.CanAttack);
@@ -58,5 +63,7 @@ namespace Project3D
         {
             SwitchState(defeat);
         }
+
+
     }
 }

@@ -39,12 +39,12 @@ namespace Project3D
         //    }
         //}
 
-        private void Zoom(float direction)
+        public void Zoom(float direction)
         {
             ZoomTo(Mathf.Clamp(virtualCamera.m_Lens.FieldOfView - direction * diffFOV, minFOV, maxFOV));
         }
 
-        private void ZoomTo(float toFOV)
+        public void ZoomTo(float toFOV)
         {
             StopAllCoroutines();
             StartCoroutine(ZoomToCoroutine(toFOV));

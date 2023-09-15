@@ -11,6 +11,7 @@ namespace Project3D
         [SerializeField] private Canvas canvas;
         [SerializeField] private BaseView[] views;
         [SerializeField] private PlayerInput input;
+        [SerializeField] private PlayerController player;
 
         private BaseView currentView;
         private Stack<BaseView> history = new Stack<BaseView>();
@@ -26,11 +27,13 @@ namespace Project3D
         private void OnEnable()
         {
             CheckPoint.InteractEvent += ShowUpgradeView;
+            player.DeathEvent += ShowDefeatView;
         }
 
         private void OnDisable()
         {
             CheckPoint.InteractEvent -= ShowUpgradeView;
+            player.DeathEvent -= ShowDefeatView;
         }
 
         private void Start()
@@ -41,18 +44,13 @@ namespace Project3D
 
         private void Update()
         {
-            if (input.Pause)
-            {
-                Show(typeof(PauseView));
-            }
+            if (input.Pause) Show(typeof(PauseView));
 
-            if (input.Cancel)
-            {
-                ShowLast();
-            }
+            if (input.Cancel) ShowLast();
         }
 
         private void ShowUpgradeView() => Show(typeof(UpgradeView));
+        private void ShowDefeatView() => Show(typeof(DefeatView));
 
         public BaseView GetView(Type viewType) => views.FirstOrDefault(view => view.GetType() == viewType);
 

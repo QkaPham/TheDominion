@@ -59,28 +59,4 @@ namespace Project3D
             stateMachine.transform.rotation = Quaternion.LookRotation(direction);
         }
     }
-
-    [Serializable]
-    public class AIStateRotateToTarget : AIState
-    {
-        [field: SerializeField] protected override string StateName { get; set; } = "Rotate";
-        [field: SerializeField] protected override float TransitionDuration { get; set; } = 0f;
-
-        private float RotateSpeed;
-
-        public override void LogicUpdate()
-        {
-            base.LogicUpdate();
-
-            RotateToTarget();
-        }
-
-        private void RotateToTarget()
-        {
-            var direction = targetDetector.TargetDirection;
-            direction.y = 0;
-            var targetRotaion = Quaternion.LookRotation(direction);
-            stateMachine.transform.rotation = Quaternion.RotateTowards(stateMachine.transform.rotation, targetRotaion, Time.deltaTime); ;
-        }
-    }
 }

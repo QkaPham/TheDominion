@@ -7,6 +7,7 @@ namespace Project3D
     {
         [SerializeField] private SkillBite bite;
         [SerializeField] private SkillBite tail;
+        [SerializeField] private SkillStump stump;
         [SerializeField] private SkillFireBreath fireBreath;
         [SerializeField] private SkillSpecial special;
 
@@ -14,10 +15,11 @@ namespace Project3D
         {
             skillList = new List<Skill>
             {
-                bite,
-                tail,
-                fireBreath,
-                special,
+                //bite,
+                //tail,
+                stump,
+                //fireBreath,
+                //special,
             };
 
             base.Initialize();

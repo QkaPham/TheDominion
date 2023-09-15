@@ -36,7 +36,8 @@ namespace Project3D
         [SerializeField] private PlayerStateLand land = new();
         //[SerializeField] private PlayerStateAttack attack = new();
         [SerializeField] private PlayerStateAttackSeperate attack = new();
-        [SerializeField] private PlayerStateDefeat defeat = new();
+        [SerializeField] private PlayerStateEnterBossRoom defeat = new();
+        
 
         private void Awake()
         {
@@ -101,6 +102,11 @@ namespace Project3D
             SwitchState(idle);
             health.HealFull();
             player.Teleport(position);
+        }
+
+        public void EnterBossRoom()
+        {
+            SwitchState(roll);
         }
     }
 }

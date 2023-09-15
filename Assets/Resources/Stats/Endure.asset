@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Endure
   m_EditorClassIdentifier: 
   id: 0
-  Base: 1
+  Base: 100
   Increment: 0.1
   level: 0

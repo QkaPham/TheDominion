@@ -133,9 +133,10 @@ namespace Project3D
             DeathEvent?.Invoke();
         }
 
-        public void ApplyRootMotion(bool apply)
+        public void ApplyRootMotion(bool apply, float speed = 1f, bool preventFalling = true)
         {
-            GetComponentInChildren<RootMotionController>().Apply = apply;
+            var rootMotion = GetComponentInChildren<RootMotionController>();
+            rootMotion.ApplyRootMotion(apply, speed, preventFalling);
             useRootMotion = apply;
         }
 

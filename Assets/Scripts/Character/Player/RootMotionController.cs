@@ -1,3 +1,4 @@
+using UnityEditor.Rendering;
 using UnityEngine;
 using UnityEngine.InputSystem.XR;
 
@@ -9,6 +10,8 @@ namespace Project3D
         [SerializeField] private CharacterController controller;
         [SerializeField] private LayerMask groundLayer;
         public bool Apply { get; set; } = false;
+        public bool PreventFalling { get; set; } = true;
+        public float Speed { get; set; } = 1f;
 
         public override void LoadComponent()
         {
@@ -21,12 +24,25 @@ namespace Project3D
         {
             if (Apply)
             {
+                controller.transform.rotation *= animator.deltaRotation;
+                if (!PreventFalling)
+                {
+                    controller.Move(animator.deltaPosition * Speed);
+                    return;
+                }
+
                 if (PreventFallingCheck())
                 {
-                    controller.Move(animator.deltaPosition);
+                    controller.Move(animator.deltaPosition * Speed);
                 }
-                controller.transform.rotation *= animator.deltaRotation;
             }
+        }
+
+        public void ApplyRootMotion(bool apply, float speed, bool preventFalling)
+        {
+            Apply = apply;
+            Speed = speed;
+            PreventFalling = preventFalling;
         }
 
         private bool PreventFallingCheck()
