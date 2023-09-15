@@ -1,13 +1,14 @@
 ﻿using System;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Animations.Rigging;
 
 namespace Project3D
 {
     [Serializable]
     public class SkillBite : Skill
     {
-        [field: SerializeField] public override string Name { get;protected set; } = "Bite";
+        [field: SerializeField] public override string Name { get; protected set; } = "Bite";
         [field: SerializeField] public override float Range { get; set; } = 1f;
 
         [SerializeField] protected float stopDistance = 1f;
@@ -28,6 +29,7 @@ namespace Project3D
         [field: SerializeField] public override float Range { get; set; } = 1f;
 
         [SerializeField] protected float stopDistance = 1f;
+        [SerializeField] protected UpperBodyRig upperBodyRig;
 
         public override void Activate(NavMeshAgent agent)
         {
@@ -36,6 +38,7 @@ namespace Project3D
             agent.stoppingDistance = stopDistance;
             agent.enabled = false;
             aiLook.Stop();
+            upperBodyRig.SetWeightSourceObject(0, 1, 1, null);
         }
     }
 }

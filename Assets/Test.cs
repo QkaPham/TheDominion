@@ -7,23 +7,44 @@ namespace Project3D
 {
     public class Test : MonoBehaviour
     {
-        public bool bite;
+        public ParticleSystem[] particles;
+        private float time;
 
-        public Animator animator;
-
-
+        private void Start()
+        {
+            StartCoroutine(Move());
+        }
 
         private void Update()
         {
+
+
             if (Keyboard.current.iKey.wasPressedThisFrame)
             {
-                Bite();
+                System.Array.ForEach(particles, particle => particle.Play());
             }
         }
 
-        private void Bite()
+        private IEnumerator Move()
         {
-            animator.SetTrigger("Bite");
+            while (true)
+            {
+                if (time < 2)
+                {
+                    time += Time.deltaTime;
+                    transform.position += Vector3.right * Time.deltaTime;
+                }
+                if (time < 4 && time >= 2)
+                {
+                    time += Time.deltaTime;
+                    transform.position -= Vector3.right * Time.deltaTime;
+                }
+                if (time >= 4)
+                {
+                    time = 0;
+                }
+                yield return null;
+            }
         }
     }
 }
