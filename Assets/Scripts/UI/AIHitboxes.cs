@@ -6,7 +6,7 @@ namespace Project3D
     public class AIHitboxes : MyMonoBehaviour
     {
         [SerializeField] private HitBox[] hitBoxes;
-        [SerializeField] private PlayerAnimationEvent animationEvent;
+        [SerializeField] private AnimationEventMeleeAttack animationEvent;
         [SerializeField] private float damage = 3f;
         [SerializeField] private LayerMask damageableLayer = 1 << 6;
 
@@ -15,7 +15,7 @@ namespace Project3D
             base.LoadComponent();
 
             hitBoxes = GetComponentsInChildren<HitBox>();
-            animationEvent = GetComponentInChildren<PlayerAnimationEvent>();
+            animationEvent = GetComponentInChildren<AnimationEventMeleeAttack>();
         }
 
         private void Start()

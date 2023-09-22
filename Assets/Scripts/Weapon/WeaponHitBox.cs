@@ -6,7 +6,7 @@ namespace Project3D
     public class WeaponHitBox : MyMonoBehaviour
     {
         [SerializeField] private Weapon weapon;
-        [SerializeField] private PlayerAnimationEvent animationEvent;
+        [SerializeField] private AnimationEventMeleeAttack animationEvent;
 
         [SerializeField] private Stat strength;
         [SerializeField] private LayerMask damageableLayer;
@@ -18,7 +18,7 @@ namespace Project3D
         {
             base.LoadComponent();
             weapon = GetComponent<Weapon>();
-            animationEvent = GetComponentInChildren<PlayerAnimationEvent>();
+            animationEvent = GetComponentInChildren<AnimationEventMeleeAttack>();
         }
 
         private void OnEnable()

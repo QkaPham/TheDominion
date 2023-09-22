@@ -121,22 +121,15 @@ namespace Project3D
             return false;
         }
 
-        public Vector3 ProjectAndScale(Vector3 velocity, Vector3 normal)
-        {
-            float speed = velocity.magnitude;
-            Vector3 projected = Vector3.ProjectOnPlane(velocity, normal).normalized;
-            return projected * speed;
-        }
-
         public void Death()
         {
             DeathEvent?.Invoke();
         }
 
-        public void ApplyRootMotion(bool apply, float speed = 1f, bool preventFalling = true)
+        public void ApplyRootMotion(bool apply, bool preventFalling = true, float moveSpeed = 1f, float rotationSpeed = 1f)
         {
             var rootMotion = GetComponentInChildren<RootMotionController>();
-            rootMotion.ApplyRootMotion(apply, speed, preventFalling);
+            rootMotion.ApplyRootMotion(apply, preventFalling, moveSpeed, rotationSpeed);
             useRootMotion = apply;
         }
 
@@ -145,6 +138,11 @@ namespace Project3D
             controller.enabled = false;
             transform.position = position;
             controller.enabled = true;
+        }
+
+        public void SetStepOffset(float value)
+        {
+            controller.stepOffset = value;
         }
     }
 }

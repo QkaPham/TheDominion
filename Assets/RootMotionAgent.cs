@@ -10,18 +10,21 @@ namespace Project3D
         [SerializeField] private Animator animator;
         [SerializeField] private NavMeshAgent agent;
 
-        private bool apply = false;
-        public bool Apply
+        private bool isApply = false;
+        public bool IsApply
         {
-            get => apply;
+            get => isApply;
             set
             {
-                apply = value;
-                agent.enabled = apply;
-                agent.updatePosition = !apply;
-                agent.updateRotation = !apply;
+                isApply = value;
+                agent.enabled = isApply;
+                agent.updatePosition = !isApply;
+                agent.updateRotation = !isApply;
             }
         }
+
+        [field: SerializeField] public float PositionMultiply { get; private set; } = 1f;
+        [field: SerializeField] public float RotationMultiply { get; private set; } = 1f;
 
         public override void LoadComponent()
         {
@@ -32,14 +35,23 @@ namespace Project3D
 
         private void OnAnimatorMove()
         {
-            if (Apply)
+            if (IsApply)
             {
-                Vector3 position = animator.rootPosition;
+                Vector3 position = animator.rootPosition * PositionMultiply;
                 position.y = agent.nextPosition.y;
                 agent.transform.position = position;
                 agent.nextPosition = transform.position;
-                agent.transform.rotation *= animator.deltaRotation;
+
+                var nextRotation = agent.transform.rotation * animator.deltaRotation;
+                agent.transform.rotation = Quaternion.LerpUnclamped(agent.transform.rotation, nextRotation, RotationMultiply);
             }
+        }
+
+        public void Apply(bool isApply, float positionMultiply = 1f, float rotationMultiply = 1f)
+        {
+            IsApply = isApply;
+            PositionMultiply = positionMultiply;
+            RotationMultiply = rotationMultiply;
         }
     }
 }

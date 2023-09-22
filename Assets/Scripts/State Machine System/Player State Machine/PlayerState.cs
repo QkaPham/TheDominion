@@ -16,13 +16,13 @@ namespace Project3D
         protected PlayerController player;
         protected PlayerStateMachine stateMachine;
         protected PlayerInput input;
-        protected PlayerAnimationEvent animationEvent;
+        protected AnimationEventMeleeAttack animationEvent;
 
         public virtual bool HasRequestTransition() => false;
         public bool IsAnimationFinished => animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.99f && animator.GetCurrentAnimatorStateInfo(0).IsName(StateName) && !animator.IsInTransition(0);
         protected float StateDuration => Time.time - stateStartTime;
 
-        public virtual void Initialize(Animator animator, PlayerController player, PlayerInput input, PlayerAnimationEvent animationEvent, PlayerStateMachine stateMachine)
+        public virtual void Initialize(Animator animator, PlayerController player, PlayerInput input, AnimationEventMeleeAttack animationEvent, PlayerStateMachine stateMachine)
         {
             this.animator = animator;
             this.player = player;

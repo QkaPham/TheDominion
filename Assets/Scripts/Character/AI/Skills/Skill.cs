@@ -24,6 +24,6 @@ namespace Project3D
             this.aiLook = ailook;
         }
 
-        public virtual void Activate(NavMeshAgent agent) { }
+        public virtual void Activate(AIStateMachine ai) { }
     }
 }

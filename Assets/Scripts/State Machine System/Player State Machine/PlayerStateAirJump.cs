@@ -15,7 +15,7 @@ namespace Project3D
 
         private float jumpVelocity;
 
-        public override void Initialize(Animator animator, PlayerController player, PlayerInput input, PlayerAnimationEvent animationEvent, PlayerStateMachine stateMachine)
+        public override void Initialize(Animator animator, PlayerController player, PlayerInput input, AnimationEventMeleeAttack animationEvent, PlayerStateMachine stateMachine)
         {
             base.Initialize(animator, player, input, animationEvent, stateMachine);
             jumpVelocity = Mathf.Sqrt(2 * 9.81f * jumpHeight);

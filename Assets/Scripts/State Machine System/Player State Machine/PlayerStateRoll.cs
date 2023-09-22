@@ -12,22 +12,10 @@ namespace Project3D
         [SerializeField] private float speed = 2f;
         public override bool HasRequestTransition() => animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.99f && animator.GetCurrentAnimatorStateInfo(0).IsName(StateName) && !animator.IsInTransition(0);
 
-        private Vector3 velocity;
-
         public override void Enter()
         {
             base.Enter();
-            player.ApplyRootMotion(true, speed, false);
-            //player.velocity = Vector3.zero;
-            //velocity = speed * (input.MoveAxesXZ == Vector3.zero ? player.transform.forward : input.MoveAxesXZ);
-        }
-
-        public override void PhysicUpdate()
-        {
-            base.PhysicUpdate();
-
-            //velocity.y = player.IsGrounded ? 0f : velocity.y - 10f * Time.deltaTime;
-            //player.MoveAndRotate(velocity);
+            player.ApplyRootMotion(true, false, speed, 1f);
         }
 
         public override void Exit()

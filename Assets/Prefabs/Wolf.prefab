@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 799742374842083142}
   - component: {fileID: 5108037756701394104}
   - component: {fileID: 1943994316289916644}
-  - component: {fileID: 5014954527187894112}
   - component: {fileID: 4382674322296003571}
   - component: {fileID: 7107235560871277661}
   - component: {fileID: 1415399315368223209}
@@ -79,18 +78,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <MaxHealth>k__BackingField: 50
---- !u!114 &5014954527187894112
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1127507239802072933}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 52c288c1ccf4a5a4d997e86aeebd9d8f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &4382674322296003571
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -103,13 +90,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c879bff086bc994aa525d4134f86772, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  animator: {fileID: 6484935907839710700}
-  ai: {fileID: 5014954527187894112}
+  <Animator>k__BackingField: {fileID: 6484935907839710700}
+  <RootMotionAgent>k__BackingField: {fileID: 9097315753375556252}
   <AiSkill>k__BackingField: {fileID: 8075275831352043287}
-  aiLook: {fileID: 7443142932950849791}
-  health: {fileID: 1943994316289916644}
-  agent: {fileID: 5108037756701394104}
-  targetDetector: {fileID: 1415399315368223209}
+  <AiLook>k__BackingField: {fileID: 7443142932950849791}
+  <Health>k__BackingField: {fileID: 1943994316289916644}
+  <Agent>k__BackingField: {fileID: 5108037756701394104}
+  <TargetDetector>k__BackingField: {fileID: 1415399315368223209}
   startPoint: {x: 0, y: 0, z: 0}
   activeRadius: 10
   idle:
@@ -123,8 +110,6 @@ MonoBehaviour:
     <StateName>k__BackingField: Chase
     <TransitionDuration>k__BackingField: 0.1
     chaseSpeed: 3
-    startAttackDistance: 1.5
-    maxTime: 3
   strafeForward:
     <StateName>k__BackingField: StrafeForward
     <TransitionDuration>k__BackingField: 0.1
@@ -190,7 +175,7 @@ MonoBehaviour:
   groundLayer:
     serializedVersion: 2
     m_Bits: 9
-  <Target>k__BackingField: {fileID: 0}
+  <targetHealth>k__BackingField: {fileID: 0}
 --- !u!65 &4851758232504893367
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -227,7 +212,7 @@ MonoBehaviour:
   hitBoxes:
   - {fileID: 338835010832156830}
   - {fileID: 32141969618156568}
-  animationEvent: {fileID: 4349225586512556821}
+  animationEvent: {fileID: 3243319466271388952}
   damage: 3
   damageableLayer:
     serializedVersion: 2
@@ -247,7 +232,7 @@ MonoBehaviour:
   targetDetector: {fileID: 1415399315368223209}
   aiLook: {fileID: 7443142932950849791}
   coolDownTime: 4
-  canAttack: 0
+  isCoolDownFinish: 0
   pound:
     <Name>k__BackingField: Pound
     <Range>k__BackingField: 3
@@ -412,6 +397,7 @@ MonoBehaviour:
   health: {fileID: 1943994316289916644}
   damagePopupPrefab: {fileID: 635063267377957940, guid: 00a23947ed2dd9e459ae6de7927f2ac7,
     type: 3}
+  randomPositonRadius: 0.1
 --- !u!1 &2019123390834164037
 GameObject:
   m_ObjectHideFlags: 0
@@ -1484,7 +1470,11 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 1762625934287448, guid: 0357d2e48f314b343a0a7f5a17540cb7,
         type: 3}
       insertIndex: -1
-      addedObject: {fileID: 4349225586512556821}
+      addedObject: {fileID: 3243319466271388952}
+    - targetCorrespondingSourceObject: {fileID: 1762625934287448, guid: 0357d2e48f314b343a0a7f5a17540cb7,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 9097315753375556252}
   m_SourcePrefab: {fileID: 100100000, guid: 0357d2e48f314b343a0a7f5a17540cb7, type: 3}
 --- !u!4 &6386715084577077246 stripped
 Transform:
@@ -1690,7 +1680,7 @@ MonoBehaviour:
   - m_Rig: {fileID: 1699020222320740925}
     m_Active: 1
   m_Effectors: []
---- !u!114 &4349225586512556821
+--- !u!114 &3243319466271388952
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1699,9 +1689,25 @@ MonoBehaviour:
   m_GameObject: {fileID: 6389363092079808742}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7ae17fa3dadc85842864e6cae860b84c, type: 3}
+  m_Script: {fileID: 11500000, guid: 14410da0e94cf7946a51936b74a8bce3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &9097315753375556252
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6389363092079808742}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0de11d21edc95364ca448ebb89528611, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animator: {fileID: 6484935907839710700}
+  agent: {fileID: 5108037756701394104}
+  <PositionMultiply>k__BackingField: 1
+  <RotationMultiply>k__BackingField: 1
 --- !u!4 &6394065298838894984 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4952728773479222, guid: 0357d2e48f314b343a0a7f5a17540cb7,

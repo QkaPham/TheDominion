@@ -11,7 +11,8 @@ namespace Project3D
         [SerializeField] private PlayerInput input;
         [SerializeField] private PlayerController player;
         [SerializeField] private Health health;
-        [SerializeField] private PlayerAnimationEvent animationEvent;
+        [SerializeField] private AnimationEventMeleeAttack animationEvent;
+        [SerializeField] public VisualEffectsPlayer visualEffects;
 
         protected bool IsAnimationFinished => animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.99f;
 
@@ -21,7 +22,7 @@ namespace Project3D
             input = GetComponent<PlayerInput>();
             player = GetComponent<PlayerController>();
             health = GetComponent<Health>();
-            animationEvent = GetComponentInChildren<PlayerAnimationEvent>();
+            animationEvent = GetComponentInChildren<AnimationEventMeleeAttack>();
         }
 
         [Header("States")]
@@ -30,11 +31,9 @@ namespace Project3D
         [SerializeField] private PlayerStateJump jump = new();
         [SerializeField] private PlayerStateFall fall = new();
         [SerializeField] private PlayerStateSlide slide = new();
-        //erializeField] private PlayerStateDash roll= new();
         [SerializeField] private PlayerStateRoll roll = new();
         [SerializeField] private PlayerStateAirJump airJump = new();
         [SerializeField] private PlayerStateLand land = new();
-        //[SerializeField] private PlayerStateAttack attack = new();
         [SerializeField] private PlayerStateAttackSeperate attack = new();
         [SerializeField] private PlayerStateEnterBossRoom defeat = new();
         
@@ -92,6 +91,8 @@ namespace Project3D
             AddTransitionFromAny(defeat, () => currentState != defeat && health.IsDead);
         }
 
+        public PlayerState GetCurrentState() => (PlayerState)currentState;
+
         private void Start()
         {
             SwitchOn(idle);
@@ -102,7 +103,10 @@ namespace Project3D
             SwitchState(idle);
             health.HealFull();
             player.Teleport(position);
+            PlayerRevive?.Invoke();
         }
+
+        public static event Action PlayerRevive;
 
         public void EnterBossRoom()
         {

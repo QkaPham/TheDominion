@@ -5,14 +5,11 @@ namespace Project3D
 {
     public class PauseView : BaseView
     {
-        private void UpdateWeapon(WeaponSO weapon)
+        protected override void PreShow()
         {
+            base.PreShow();
 
+            Time.timeScale = 0f;
         }
-    }
-
-    public class BasePanel : MyMonoBehaviour
-    {
-
     }
 }

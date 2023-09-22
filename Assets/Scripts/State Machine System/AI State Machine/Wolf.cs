@@ -19,40 +19,40 @@ namespace Project3D
         {
             base.Awake();
 
-            idle.Initialize(animator, ai, agent, targetDetector, aiLook, this);
-            chase.Initialize(animator, ai, agent, targetDetector, aiLook, this);
-            attack.Initialize(animator, ai, agent, targetDetector, aiLook, this);
-            strafeForward.Initialize(animator, ai, agent, targetDetector, aiLook, this);
-            strafeBackward.Initialize(animator, ai, agent, targetDetector, aiLook, this);
-            findAttacker.Initialize(animator, ai, agent, targetDetector, aiLook, this);
-            giveUp.Initialize(animator, ai, agent, targetDetector, aiLook, this);
-            hurt.Initialize(animator, ai, agent, targetDetector, aiLook, this);
-            defeat.Initialize(animator, ai, agent, targetDetector, aiLook, this);
+            idle.Initialize(Animator, RootMotionAgent, Agent, TargetDetector, AiLook, this);
+            chase.Initialize(Animator, RootMotionAgent, Agent, TargetDetector, AiLook, this);
+            attack.Initialize(Animator, RootMotionAgent, Agent, TargetDetector, AiLook, this);
+            strafeForward.Initialize(Animator, RootMotionAgent, Agent, TargetDetector, AiLook, this);
+            strafeBackward.Initialize(Animator, RootMotionAgent, Agent, TargetDetector, AiLook, this);
+            findAttacker.Initialize(Animator, RootMotionAgent, Agent, TargetDetector, AiLook, this);
+            giveUp.Initialize(Animator, RootMotionAgent, Agent, TargetDetector, AiLook, this);
+            hurt.Initialize(Animator, RootMotionAgent, Agent, TargetDetector, AiLook, this);
+            defeat.Initialize(Animator, RootMotionAgent, Agent, TargetDetector, AiLook, this);
 
-            AddTransition(idle, chase, () => targetDetector.HasTarget() && AiSkill.CanAttack);
-            AddTransition(idle, strafeForward, () => targetDetector.HasTarget() && !AiSkill.CanAttack);
+            AddTransition(idle, chase, () => TargetDetector.HasTarget() && AiSkill.IsCoolDownFinish);
+            AddTransition(idle, strafeForward, () => TargetDetector.HasTarget() && !AiSkill.IsCoolDownFinish);
 
-            AddTransition(chase, attack, () => targetDetector.DistanceToDestination <= AiSkill.SkillRange);
-            AddTransition(chase, idle, () => !targetDetector.HasTarget());
+            AddTransition(chase, attack, () => TargetDetector.DistanceToDestination <= AiSkill.SkillRange);
+            AddTransition(chase, idle, () => !TargetDetector.HasTarget());
 
-            AddTransition(attack, strafeBackward, () => GetCurrentState().HasTransitionRequest() && targetDetector.HasTarget());
-            AddTransition(attack, idle, () => GetCurrentState().HasTransitionRequest() && !targetDetector.HasTarget());
+            AddTransition(attack, strafeBackward, () => GetCurrentState().HasTransitionRequest() && TargetDetector.HasTarget());
+            AddTransition(attack, idle, () => GetCurrentState().HasTransitionRequest() && !TargetDetector.HasTarget());
 
-            AddTransition(strafeForward, idle, () => !targetDetector.HasTarget());
-            AddTransition(strafeForward, chase, () => AiSkill.CanAttack);
+            AddTransition(strafeForward, idle, () => !TargetDetector.HasTarget());
+            AddTransition(strafeForward, chase, () => AiSkill.IsCoolDownFinish);
 
-            AddTransition(strafeBackward, chase, () => AiSkill.CanAttack);
-            AddTransition(strafeBackward, strafeForward, () => !AiSkill.CanAttack && GetCurrentState().HasTransitionRequest());
+            AddTransition(strafeBackward, chase, () => AiSkill.IsCoolDownFinish);
+            AddTransition(strafeBackward, strafeForward, () => !AiSkill.IsCoolDownFinish && GetCurrentState().HasTransitionRequest());
 
-            AddTransition(findAttacker, chase, () => targetDetector.HasTarget() && AiSkill.CanAttack);
+            AddTransition(findAttacker, chase, () => TargetDetector.HasTarget() && AiSkill.IsCoolDownFinish);
             AddTransition(findAttacker, idle, () => findAttacker.TimeOut);
-            AddTransition(findAttacker, strafeBackward, () => targetDetector.HasTarget() && !AiSkill.CanAttack);
+            AddTransition(findAttacker, strafeBackward, () => TargetDetector.HasTarget() && !AiSkill.IsCoolDownFinish);
 
             AddTransition(giveUp, idle, () => Vector3.Distance(transform.position, startPoint) < 0.1f);
 
-            AddTransition(hurt, findAttacker, () => GetCurrentState().HasTransitionRequest() && !targetDetector.HasTarget());
-            AddTransition(hurt, strafeBackward, () => GetCurrentState().HasTransitionRequest() && targetDetector.HasTarget() && !AiSkill.CanAttack);
-            AddTransition(hurt, chase, () => GetCurrentState().HasTransitionRequest() && targetDetector.HasTarget() && AiSkill.CanAttack);
+            AddTransition(hurt, findAttacker, () => GetCurrentState().HasTransitionRequest() && !TargetDetector.HasTarget());
+            AddTransition(hurt, strafeBackward, () => GetCurrentState().HasTransitionRequest() && TargetDetector.HasTarget() && !AiSkill.IsCoolDownFinish);
+            AddTransition(hurt, chase, () => GetCurrentState().HasTransitionRequest() && TargetDetector.HasTarget() && AiSkill.IsCoolDownFinish);
 
             AddTransitionFromAny(giveUp, GiveUpCondition);
 
@@ -60,28 +60,28 @@ namespace Project3D
             {
                 if (currentState == defeat || currentState == attack) return false;
 
-                if (!targetDetector.HasTarget()) return false;
-                return Vector3.Distance(targetDetector.Target.position, startPoint) > activeRadius;
+                if (!TargetDetector.HasTarget()) return false;
+                return Vector3.Distance(TargetDetector.Target.position, startPoint) > activeRadius;
             }
         }
 
         private void OnEnable()
         {
-            health.HealthChanged += TransitionOntakeDamage;
-            health.Defeat += OnDefeat;
+            Health.HealthChanged += TransitionOntakeDamage;
+            Health.Defeat += OnDefeat;
         }
 
         private void Start() => SwitchOn(idle);
 
         private void OnDisable()
         {
-            health.HealthChanged -= TransitionOntakeDamage;
-            health.Defeat -= OnDefeat;
+            Health.HealthChanged -= TransitionOntakeDamage;
+            Health.Defeat -= OnDefeat;
         }
 
         private void TransitionOntakeDamage(float diff)
         {
-            if (currentState == defeat || currentState == attack) return;
+            if (currentState == defeat || currentState == attack || currentState == hurt) return;
 
             if (diff >= 0) return;
             SwitchState(hurt);

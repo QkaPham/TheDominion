@@ -2,7 +2,6 @@ using System.Collections.Generic;
 using System.Collections;
 using System.Linq;
 using UnityEngine;
-using UnityEngine.AI;
 
 namespace Project3D
 {
@@ -14,18 +13,20 @@ namespace Project3D
         protected List<Skill> skillList;
         [SerializeField] protected float coolDownTime = 5f;
         protected WaitForSeconds cooldown;
-        public bool canAttack;
-        public bool CanAttack
+        public bool isCoolDownFinish;
+        public bool IsCoolDownFinish
         {
-            get => canAttack;
+            get => isCoolDownFinish;
             set
             {
-                canAttack = value;
-                if (canAttack) ChooseSkill();
+                isCoolDownFinish = value;
+                if (isCoolDownFinish) StartCoroutine(ChooseSkill());
             }
         }
 
         public Skill ReadySkill { get; protected set; }
+
+        public bool HasCanUseSkill() => ReadySkill != null;
 
         public float SkillRange => ReadySkill.Range;
 
@@ -42,15 +43,14 @@ namespace Project3D
         protected virtual void Initialize()
         {
             skillList.ForEach(skill => skill.Init(targetDetector, aiLook));
-            CanAttack = true;
             cooldown = new WaitForSeconds(coolDownTime);
-            ChooseSkill();
+            StartCoroutine(TargetCheck());
         }
 
-        public void Activate(NavMeshAgent agent)
+        public void Activate(AIStateMachine ai)
         {
-            ReadySkill.Activate(agent);
-            CanAttack = false;
+            ReadySkill.Activate(ai);
+            IsCoolDownFinish = false;
         }
 
         public void CoolDown()
@@ -60,14 +60,30 @@ namespace Project3D
 
         private IEnumerator Cooldown()
         {
+            ReadySkill = null;
             yield return cooldown;
-            CanAttack = true;
+            IsCoolDownFinish = true;
         }
 
-        protected virtual void ChooseSkill()
+        protected virtual IEnumerator ChooseSkill()
         {
-            var canUseSkills = skillList.Where(skill => skill.CanUse).ToList();
+            List<Skill> canUseSkills = new List<Skill>();
+
+            while (canUseSkills.Count <= 0)
+            {
+                canUseSkills = skillList.Where(skill => skill.CanUse).ToList();
+                yield return null;
+            }
             ReadySkill = canUseSkills[Random.Range(0, canUseSkills.Count())];
+        }
+
+        private IEnumerator TargetCheck()
+        {
+            while (!targetDetector.HasTarget())
+            {
+                yield return null;
+            }
+            IsCoolDownFinish = true;
         }
     }
 }

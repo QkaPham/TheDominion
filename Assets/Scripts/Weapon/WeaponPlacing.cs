@@ -1,6 +1,5 @@
 using System.Linq;
 using UnityEngine;
-using static UnityEditor.FilePathAttribute;
 
 namespace Project3D
 {

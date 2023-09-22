@@ -14,6 +14,7 @@ namespace Project3D
         protected override void PostShow()
         {
             input.EnablePlayerInput(true);
+            Time.timeScale = 1f;
         }
     }
 }

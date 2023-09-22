@@ -6,7 +6,9 @@ namespace Project3D
     public class AnimationEventFireBreath : MyMonoBehaviour
     {
         [SerializeField] private AILook aiLook;
-        public event Action FireBreathStart, FireBreathEnd;
+        public event Action FireBreathStart, FireBreathEnd, SpecialStart, SpecialEnd;
+
+        public UpperBodyRig upperBodyRig;
 
         public void FireBreathStartEvent()
         {
@@ -25,13 +27,18 @@ namespace Project3D
 
         public void SpecialStartEvent()
         {
-            FireBreathStart?.Invoke();
+            SpecialStart?.Invoke();
         }
 
         public void SpecialEndEvent()
         {
-            FireBreathEnd?.Invoke();
+            SpecialEnd?.Invoke();
             aiLook.Stop();
+        }
+
+
+        public void StumpEnd()
+        {
         }
     }
 }

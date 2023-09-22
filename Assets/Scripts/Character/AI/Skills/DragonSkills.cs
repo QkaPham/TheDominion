@@ -6,7 +6,7 @@ namespace Project3D
     public class DragonSkills : AISkills
     {
         [SerializeField] private SkillBite bite;
-        [SerializeField] private SkillBite tail;
+        [SerializeField] private SkillTail tail;
         [SerializeField] private SkillStump stump;
         [SerializeField] private SkillFireBreath fireBreath;
         [SerializeField] private SkillSpecial special;
@@ -16,10 +16,10 @@ namespace Project3D
             skillList = new List<Skill>
             {
                 //bite,
-                //tail,
+                tail,
                 stump,
-                //fireBreath,
-                //special,
+                fireBreath,
+                special,
             };
 
             base.Initialize();

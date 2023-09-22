@@ -90,11 +90,11 @@ namespace Project3D
                 yield break;
             }
 
-            float startTime = Time.time;
+            float startTime = Time.unscaledTime;
             float progress = 0f;
             while (progress < 1)
             {
-                progress = (Time.time - startTime) / duration;
+                progress = (Time.unscaledTime - startTime) / duration;
 
                 if (type.HasFlag(ViewAnimationType.Slide))
                 {

@@ -15,13 +15,13 @@ namespace Project3D
         [SerializeField] protected float moveTime = 0.5f;
         public override bool CanUse => targetDetector.DistanceToDestination > minDistanceToUse;
 
-        public override void Activate(NavMeshAgent agent)
+        public override void Activate(AIStateMachine ai)
         {
-            base.Activate(agent);
+            base.Activate(ai);
 
-            agent.speed = targetDetector.DistanceToDestination / moveTime;
-            agent.stoppingDistance = stopDistance;
-            agent.SetDestination(targetDetector.Target.position);
+            ai.Agent.speed = targetDetector.DistanceToDestination / moveTime;
+            ai.Agent.stoppingDistance = stopDistance;
+            ai.Agent.SetDestination(targetDetector.Target.position);
         }
     }
 }

@@ -10,12 +10,13 @@ namespace Project3D
         [field: SerializeField] public override string Name { get; protected set; } = "Special";
         [field: SerializeField] public override float Range { get; set; } = 5f;
 
-        public override void Activate(NavMeshAgent agent)
+        public override bool CanUse => Mathf.Abs(targetDetector.SignedAngleToTarget()) >= 90f && targetDetector.DistanceToTarget <= Range;
+        public override void Activate(AIStateMachine ai)
         {
-            base.Activate(agent);
+            base.Activate(ai);
 
-            agent.enabled = false;
-            aiLook.Stop();
+            ai.RootMotionAgent.Apply(true, 1, 1f - targetDetector.SignedAngleToTarget() / 360f);
+            ai.AiLook.Stop();
         }
     }
 }

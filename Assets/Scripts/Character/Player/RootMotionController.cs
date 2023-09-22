@@ -1,6 +1,4 @@
-using UnityEditor.Rendering;
 using UnityEngine;
-using UnityEngine.InputSystem.XR;
 
 namespace Project3D
 {
@@ -11,7 +9,10 @@ namespace Project3D
         [SerializeField] private LayerMask groundLayer;
         public bool Apply { get; set; } = false;
         public bool PreventFalling { get; set; } = true;
-        public float Speed { get; set; } = 1f;
+
+        //Adjust velocity and rotation of some special animation (Roll, Dash, Skills ...)
+        [field: SerializeField] public float MoveSpeed { get; set; } = 1f;
+        [field: SerializeField] public float RotationSpeed { get; set; } = 1f;
 
         public override void LoadComponent()
         {
@@ -22,30 +23,32 @@ namespace Project3D
 
         private void OnAnimatorMove()
         {
+            MoveAndRotate();
+        }
+
+        public void ApplyRootMotion(bool apply, bool preventFalling, float moveSpeed, float rotationSpeed)
+        {
+            Apply = apply;
+            MoveSpeed = moveSpeed;
+            RotationSpeed = rotationSpeed;
+            PreventFalling = preventFalling;
+        }
+
+        private void MoveAndRotate()
+        {
             if (Apply)
             {
-                controller.transform.rotation *= animator.deltaRotation;
-                if (!PreventFalling)
-                {
-                    controller.Move(animator.deltaPosition * Speed);
-                    return;
-                }
+                var nextRotation = controller.transform.rotation * animator.deltaRotation;
+                controller.transform.rotation = Quaternion.LerpUnclamped(controller.transform.rotation, nextRotation, RotationSpeed);
 
-                if (PreventFallingCheck())
+                if (!PreventFalling || IsNextMovingGrounded())
                 {
-                    controller.Move(animator.deltaPosition * Speed);
+                    controller.Move(animator.deltaPosition * MoveSpeed);
                 }
             }
         }
 
-        public void ApplyRootMotion(bool apply, float speed, bool preventFalling)
-        {
-            Apply = apply;
-            Speed = speed;
-            PreventFalling = preventFalling;
-        }
-
-        private bool PreventFallingCheck()
+        private bool IsNextMovingGrounded()
         {
             var origin = controller.bounds.center + animator.deltaPosition;
             var maxDistance = controller.height / 2 + controller.stepOffset + 0.1f;

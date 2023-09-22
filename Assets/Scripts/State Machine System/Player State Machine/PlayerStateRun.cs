@@ -23,5 +23,19 @@ namespace Project3D
             player.MoveAndRotate(runSpeed * Mathf.Sin(Vector3.Angle(input.MoveAxesXZ, downwardHit.normal) * Mathf.Deg2Rad) * input.MoveAxesXZ);
             player.SnapToGround(snapSpeed);
         }
+
+        public override void Enter()
+        {
+            base.Enter();
+
+            stateMachine.visualEffects.Play(StateName);
+        }
+
+        public override void Exit()
+        {
+            base.Exit();
+
+            stateMachine.visualEffects.Stop(StateName);
+        }
     }
 }

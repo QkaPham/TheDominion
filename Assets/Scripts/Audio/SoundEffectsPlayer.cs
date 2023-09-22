@@ -1,16 +1,27 @@
+using System.Linq;
 using UnityEngine;
 
 namespace Project3D
 {
     public class SoundEffectsPlayer : MyMonoBehaviour
     {
-        [field: SerializeField] public static AudioSource AudioSource { get; private set; }
+        [SerializeField] private AudioSource audioSource;
+        [SerializeField] private AudioClip[] sounds;
 
         public override void LoadComponent()
         {
             base.LoadComponent();
-            AudioSource = GetComponent<AudioSource>();
-            AudioSource.playOnAwake = false;
+            audioSource = GetComponent<AudioSource>();
+            audioSource.playOnAwake = false;
+        }
+
+        public void Play(string soundName)
+        {
+            var clip = sounds.FirstOrDefault(audioClip => audioClip.name == soundName);
+            if (clip != null)
+            {
+                audioSource.PlayOneShot(clip);
+            }
         }
     }
 }

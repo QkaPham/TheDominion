@@ -26,7 +26,7 @@ namespace Project3D
 
             agent.SetDestination(stateMachine.startPoint);
 
-            stateMachine.health.HealFull();
+            stateMachine.Health.HealFull();
         }
     }
 }

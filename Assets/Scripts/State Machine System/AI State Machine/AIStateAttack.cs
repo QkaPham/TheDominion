@@ -1,6 +1,5 @@
 ﻿using System;
 using UnityEngine;
-using UnityEngine.AI;
 
 namespace Project3D
 {
@@ -14,18 +13,8 @@ namespace Project3D
         public override bool HasTransitionRequest() => animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.99f && animator.GetCurrentAnimatorStateInfo(0).IsName(stateMachine.AiSkill.ReadySkill.Name);
         protected override int StateHash => stateMachine.AiSkill.ReadySkill.Hash;
 
-        public override void Enter()
+        protected bool IsAgentReachDestination()
         {
-            base.Enter();
-
-            RotateToTarget();
-            stateMachine.AiSkill.Activate(agent);
-        }
-
-        public override void LogicUpdate()
-        {
-            base.LogicUpdate();
-
             if (agent.enabled)
             {
                 if (!agent.pathPending)
@@ -34,11 +23,32 @@ namespace Project3D
                     {
                         if (!agent.hasPath || agent.velocity.sqrMagnitude == 0f)
                         {
-                            agent.enabled = false;
-                            agent.velocity = Vector3.zero;
+                            return true;
                         }
+                        return false;
                     }
+                    return false;
                 }
+                return false;
+            }
+            return false;
+        }
+
+        public override void Enter()
+        {
+            base.Enter();
+
+            stateMachine.AiSkill.Activate(stateMachine);
+        }
+
+        public override void LogicUpdate()
+        {
+            base.LogicUpdate();
+
+            if (IsAgentReachDestination())
+            {
+                agent.enabled = false;
+                agent.velocity = Vector3.zero;
             }
         }
 
@@ -51,12 +61,35 @@ namespace Project3D
             aiLook.LockOn();
             stateMachine.AiSkill.CoolDown();
         }
+    }
 
-        private void RotateToTarget()
+    [Serializable]
+    public class AIStateAttackRootMotion : AIState
+    {
+        [field: SerializeField] protected override string StateName { get; set; } = "Attack";
+        [field: SerializeField, Range(0f, 1f)] protected override float TransitionDuration { get; set; } = 0f;
+
+        public override bool HasTransitionRequest() => animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.99f && animator.GetCurrentAnimatorStateInfo(0).IsName(stateMachine.AiSkill.ReadySkill.Name);
+        protected override int StateHash => stateMachine.AiSkill.ReadySkill.Hash;
+
+        [SerializeField] protected float moveSpeed = 1f;
+        [SerializeField] protected float rotationSpeed = 1f;
+
+        public override void Enter()
         {
-            var direction = targetDetector.TargetDirection;
-            direction.y = 0;
-            stateMachine.transform.rotation = Quaternion.LookRotation(direction);
+            base.Enter();
+
+            rootMotionAgent.Apply(true, moveSpeed, rotationSpeed);
+            stateMachine.AiSkill.Activate(stateMachine);
+        }
+
+        public override void Exit()
+        {
+            base.Exit();
+
+            rootMotionAgent.Apply(false);
+            aiLook.LockOn();
+            stateMachine.AiSkill.CoolDown();
         }
     }
 }

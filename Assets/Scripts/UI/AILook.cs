@@ -42,13 +42,16 @@ namespace Project3D
             }
         }
 
+        private Vector3 nextPosition;
+
         private IEnumerator FollowTarget()
         {
             while (true)
             {
                 if (targetDetector.HasTarget())
                 {
-                    lookAtSource.position = Vector3.MoveTowards(lookAtSource.position, targetDetector.Target.position, Time.deltaTime * followSpeed);
+                   var nextPosition = Vector3.MoveTowards(lookAtSource.position, targetDetector.Target.position, Time.deltaTime * followSpeed);
+                    lookAtSource.position = nextPosition;
                 }
                 yield return null;
             }

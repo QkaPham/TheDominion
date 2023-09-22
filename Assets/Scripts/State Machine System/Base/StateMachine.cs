@@ -23,8 +23,6 @@ namespace Project3D
             currentState.LogicUpdate();
         }
 
-        public PlayerState GetCurrentState() => (PlayerState)currentState;
-
         protected void SwitchOn(IState newState)
         {
             currentState = newState;

@@ -14,6 +14,7 @@ namespace Project3D
         private Collider[] targets;
 
         private Transform target;
+
         public Transform Target
         {
             get => target;
@@ -68,6 +69,7 @@ namespace Project3D
 
         public float SignedAngleToTarget()
         {
+            if (!HasTarget()) return 0;
             var direction = TargetDirection;
             direction.y = 0;
             return Vector3.SignedAngle(transform.forward, direction, transform.up);

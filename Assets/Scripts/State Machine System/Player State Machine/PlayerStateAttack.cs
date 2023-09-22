@@ -23,6 +23,7 @@ namespace Project3D
             player.RotateToClosetEnemy();
             player.ApplyRootMotion(true);
             player.WeaponPlacing.LoadWeaponToHand();
+            player.SetStepOffset(0);
             animator.SetFloat(StateHash, currentHit);
             base.Enter();
         }
@@ -34,6 +35,7 @@ namespace Project3D
             animationEvent.AttackFinish -= OnAttackFinish;
             player.ApplyRootMotion(false);
             player.WeaponPlacing.LoadWeaponToBack();
+            player.SetStepOffset(.2f);
         }
 
         public override void LogicUpdate()
@@ -88,7 +90,7 @@ namespace Project3D
 
         public override bool HasRequestTransition() => animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.99f && animator.GetCurrentAnimatorStateInfo(0).IsName(StateName + currentHit) && !animator.IsInTransition(0);
 
-        public override void Initialize(Animator animator, PlayerController player, PlayerInput input, PlayerAnimationEvent animationEvent, PlayerStateMachine stateMachine)
+        public override void Initialize(Animator animator, PlayerController player, PlayerInput input, AnimationEventMeleeAttack animationEvent, PlayerStateMachine stateMachine)
         {
             base.Initialize(animator, player, input, animationEvent, stateMachine);
 
@@ -101,20 +103,21 @@ namespace Project3D
 
         public override void Enter()
         {
+            player.SetStepOffset(0);
             animationEvent.AttackFinish += OnAttackFinish;
             currentHit = 1;
             IsAttackFinished = false;
             player.RotateToClosetEnemy();
             player.ApplyRootMotion(true);
             player.WeaponPlacing.LoadWeaponToHand();
-            animator.CrossFade(StateHash, TransitionDuration);
-            stateStartTime = Time.time;
+            base.Enter();
         }
 
         public override void Exit()
         {
             base.Exit();
 
+            player.SetStepOffset(.2f);
             animationEvent.AttackFinish -= OnAttackFinish;
             player.ApplyRootMotion(false);
             player.WeaponPlacing.LoadWeaponToBack();

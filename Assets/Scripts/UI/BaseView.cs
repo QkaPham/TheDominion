@@ -66,7 +66,7 @@ namespace Project3D
                 canvasGroup.interactable = show;
                 canvasGroup.blocksRaycasts = show;
                 Array.ForEach(viewAnimates, show ? view => view.Show(duration) : view => view.Hide(duration));
-                yield return new WaitForSeconds(duration);
+                yield return new WaitForSecondsRealtime(duration);
             }
             onComplete?.Invoke();
         }

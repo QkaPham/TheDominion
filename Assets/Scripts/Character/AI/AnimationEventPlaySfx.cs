@@ -1,14 +1,14 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace Project3D
 {
-    public class AnimationEventPlaySfx : MonoBehaviour
+    public class AnimationEventPlaySfx : MyMonoBehaviour
     {
-        private void PlaySound(string soundName)
+        [SerializeField] private SoundEffectsPlayer effectPlayer;
+
+        public void PlaySound(string soundName)
         {
-            // Play SFX by name
+            effectPlayer.Play(soundName);
         }
     }
 }

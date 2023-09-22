@@ -8,17 +8,16 @@ namespace Project3D
     public class SkillFireBreath : Skill
     {
         [field: SerializeField] public override string Name { get; protected set; } = "FireBreath";
-        [field: SerializeField] public override float Range { get; set; } = 1f;
+        [field: SerializeField] public override float Range { get; set; } =10f;
+        [field: SerializeField] public float MinDistance { get; set; } = 5f;
+        [field: SerializeField] public float Angle { get; set; } = 45f;
+        public override bool CanUse => Mathf.Abs(targetDetector.SignedAngleToTarget()) <= Angle && targetDetector.DistanceToTarget <= Range && targetDetector.DistanceToTarget >= MinDistance;
 
-        [SerializeField] protected float minDistance = 1f;
-        public override bool CanUse => targetDetector.DistanceToTarget >= minDistance;
-
-        public override void Activate(NavMeshAgent agent)
+        public override void Activate(AIStateMachine ai)
         {
-            base.Activate(agent);
+            base.Activate(ai);
 
-            agent.enabled = false;
-            aiLook.Stop();
+            ai.AiLook.Stop();
         }
     }
 }

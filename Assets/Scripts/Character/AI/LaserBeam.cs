@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -17,11 +18,9 @@ namespace Project3D
         [SerializeField] private float radius;
         [SerializeField] private AnimationEventFireBreath fireBreathEvent;
         [SerializeField] private Transform beamHolder;
+        [SerializeField] private Transform aimPoint;
 
-        public bool enable;
         private float lastDealingDamageTime;
-
-
 
         public override void LoadComponent()
         {
@@ -35,49 +34,73 @@ namespace Project3D
 
         private void OnEnable()
         {
-            fireBreathEvent.FireBreathStart += Toggle;
-            fireBreathEvent.FireBreathEnd += Toggle;
+            fireBreathEvent.FireBreathStart += StartShootForward;
+            fireBreathEvent.FireBreathEnd += StopShoot;
+            fireBreathEvent.SpecialStart += StartShootToPoint;
+            fireBreathEvent.SpecialEnd += StopShoot;
         }
 
         private void OnDisable()
         {
-            fireBreathEvent.FireBreathStart -= Toggle;
-            fireBreathEvent.FireBreathEnd -= Toggle;
+            fireBreathEvent.FireBreathStart -= StartShootForward;
+            fireBreathEvent.FireBreathEnd -= StopShoot;
+            fireBreathEvent.SpecialStart -= StartShootToPoint;
+            fireBreathEvent.SpecialEnd -= StopShoot;
         }
 
-        private void Update()
+        private void StartShootForward()
         {
-            if (enable)
+            laserBeamFx.enabled = true;
+            flashFx.Play();
+            StartCoroutine(ShootForward());
+        }
+
+        private void StartShootToPoint()
+        {
+            laserBeamFx.enabled = true;
+            flashFx.Play();
+            StartCoroutine(ShootToPoint(aimPoint));
+        }
+
+        private void StopShoot()
+        {
+            laserBeamFx.enabled = false;
+            flashFx.Stop();
+            foreach (var hitFx in hitFxs)
             {
-                Shoot();
+                hitFx.Stop();
+            }
+            StopAllCoroutines();
+        }
+
+        public IEnumerator ShootForward()
+        {
+            while (true)
+            {
+                var fwd = beamHolder.forward;
+                fwd.y = 0;
+                Shoot(fwd, distance);
+                yield return null;
             }
         }
 
-        public void Toggle()
+        public IEnumerator ShootToPoint(Transform point)
         {
-            enable = !enable;
-
-            laserBeamFx.enabled = enable;
-            if (enable)
+            while (true)
             {
-                flashFx.Play();
-            }
-            else
-            {
-                flashFx.Stop();
-                foreach (var hitFx in hitFxs)
-                {
-                    hitFx.Stop();
-                }
+                var dir = point.position - beamHolder.position;
+                Shoot(dir, 256f);
+                yield return null;
             }
         }
 
-        private void Shoot()
+        private void Shoot(Vector3 direction, float distance)
         {
-            if (Physics.SphereCast(transform.position, radius, beamHolder.forward, out var hitInfo, distance, targetLayer))
+            if (Physics.SphereCast(transform.position, radius, direction, out var hitInfo, distance, targetLayer))
             {
                 hitFxTransform.transform.position = hitInfo.point;
                 hitFxTransform.forward = hitInfo.normal;
+                laserBeamFx.SetPosition(1, transform.InverseTransformPoint(hitInfo.point));
 
                 foreach (var hitFx in hitFxs)
                 {
@@ -96,17 +119,12 @@ namespace Project3D
             }
             else
             {
+                laserBeamFx.SetPosition(1, transform.InverseTransformPoint(transform.position + direction * distance));
                 foreach (var hitFx in hitFxs)
                 {
                     hitFx.Stop();
                 }
             }
-
-        }
-
-        private void OnDrawGizmos()
-        {
-            Gizmos.DrawRay(transform.position, beamHolder.forward * distance);
         }
     }
 }
